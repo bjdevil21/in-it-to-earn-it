@@ -1,0 +1,5 @@
+name = Earn It Activity Tweaks
+description = Acitivity Tweaks for the In It To Earn It project.
+core = 7.x 
+package = Earn It
+files[] = earn_it_activity_tweaks.module

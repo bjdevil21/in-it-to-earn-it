@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * earn_it_activity_tweaks.module - Earn It Activity Tweaks code.
+ *
+ * @author
+ * Shawn FitzPatrick sdfitzpa@asu.edu
+ *
+ * Provides form tweaks for the add activity form
+ *
+ */
+
+/*********************************************************************
+  CONFIG
+*********************************************************************/
+
+
+/*********************************************************************
+  DRUPAL HOOKS
+*********************************************************************/
+
+/**
+ * Implements hook_form_alter().
+ *
+ */
+function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
+
+  drupal_set_message($form);
+
+  switch($form_id) {
+
+    case 'event_node_form':
+
+      
+
+
+      // Conditionally hide fields based on checked state of $form['field_sun_card_swipe']
+      $form['field_check_in_instructions']['#states'] = array(
+        // Only show this field when the 'field_sun_card_swipe' checkbox is enabled.
+        'visible' => array(
+          ':input[id=edit-field-sun-card-swipe-und]' => array('checked' => TRUE),
+          ),
+        );
+      $form['field_event_host']['#states'] = array(
+        // Only show this field when the 'field_sun_card_swipe' checkbox is enabled.
+        'visible' => array(
+          ':input[id=edit-field-sun-card-swipe-und]' => array('checked' => TRUE),
+          ),
+        );
+
+
+      break;
+
+    }
+}
