@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * earn_it_form_tweaks.module - Earn It Form Tweaks code.
+ *
+ * @author
+ * Shawn FitzPatrick sdfitzpa@asu.edu
+ *
+ * Provides form tweaks for the add activity form
+ *
+ */
+
+/*********************************************************************
+  CONFIG
+*********************************************************************/
+
+
+/*********************************************************************
+  DRUPAL HOOKS
+*********************************************************************/
+
+/**
+ * Implements hook_form_alter().
+ *
+ */
+function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
+
+  switch($form_id) {
+
+    case 'game_node_form':
+    
+      $randomdSerial = rand(1000, 10000);
+      // TODO: check its not a duplicate
+
+      $form['field_serial_number']['und'][0]['value'] = $randomSerial;
+     
+      break;
+
+    }
+}
