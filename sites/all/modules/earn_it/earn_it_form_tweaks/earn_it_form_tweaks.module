@@ -35,21 +35,22 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
       
       $cpath = current_path();
       drupal_set_message($cpath);
-      if ($cpath == "node/add/game")
-        drupal_set_message("on add");
+      if ($cpath == "node/add/game") {
     
-      $randomSerial = rand(1000, 10000);
-      // TODO: check its not a duplicate
+        $randomSerial = rand(1000, 10000);
+        // TODO: check its not a duplicate
       
-      $form['title']['#default_value'] = "game" . $randomSerial;
+        $form['title']['#default_value'] = "game" . $randomSerial;
 
-      $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
-      $form['field_serial_number']['#disabled'] = true;
-      $form['field_facilitator']['und']['#default_value'] = $account->uid;
-      $form['field_facilitator']['#disabled'] = true;
-      $form['field_current_game_state']['#disabled'] = true;
+        $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
+        $form['field_serial_number']['#disabled'] = true;
+        $form['field_facilitator']['und']['#default_value'] = $account->uid;
+        $form['field_facilitator']['#disabled'] = true;
+        $form['field_current_game_state']['#disabled'] = true;
       
-      $form['#submit'][] = 'add_users_to_game';
+        $form['#submit'][] = 'add_users_to_game';
+      
+      }
      
       break;
 
