@@ -30,7 +30,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
     case 'game_node_form':
     
-      $randomdSerial = rand(1000, 10000);
+      $randomSerial = rand(1000, 10000);
       // TODO: check its not a duplicate
 
       $form['field_serial_number']['und'][0]['value'] = $randomSerial;
