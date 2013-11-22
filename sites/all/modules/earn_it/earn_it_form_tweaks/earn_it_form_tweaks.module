@@ -41,6 +41,8 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         // TODO: check its not a duplicate
       
         $form['title']['#default_value'] = "game" . $randomSerial;
+        
+        drupal_set_message($randomSerial);
 
         $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
         $form['field_serial_number']['#disabled'] = true;
@@ -49,6 +51,8 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['field_current_game_state']['#disabled'] = true;
       
         $form['#submit'][] = 'add_users_to_game';
+        
+        drupal_set_message($randomSerial);
       
       }
      
