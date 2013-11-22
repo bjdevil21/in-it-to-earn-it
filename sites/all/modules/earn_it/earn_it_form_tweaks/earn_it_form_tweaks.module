@@ -35,14 +35,26 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
     
       $randomSerial = rand(1000, 10000);
       // TODO: check its not a duplicate
+      
+      $form['title']['#default_value'] = "game" . $randomSerial;
 
       $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
       $form['field_serial_number']['#disabled'] = true;
       $form['field_facilitator']['und']['#default_value'] = $account->uid;
       $form['field_facilitator']['#disabled'] = true;
       $form['field_current_game_state']['#disabled'] = true;
+      
+      $form['#submit'][] = 'add_users_to_game';
      
       break;
 
     }
+}
+
+/*********************************************************************
+  API
+*********************************************************************/
+
+function add_users_to_game($form, &$form_state) {
+  drupal_set_message($form['field_serial_number']['und'][0]['value']);
 }
