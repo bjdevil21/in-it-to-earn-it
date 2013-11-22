@@ -38,7 +38,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
       $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
       $form['field_serial_number']['#disabled'] = true;
-      $form['field_facilitator']['und']['#default_value'] = $account;
+      $form['field_facilitator']['und']['#default_value'] = $account->uid;
       $form['field_facilitator']['#disabled'] = true;
       $form['field_current_game_state']['#disabled'] = true;
      
