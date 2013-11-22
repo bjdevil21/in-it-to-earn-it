@@ -33,7 +33,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
       $randomSerial = rand(1000, 10000);
       // TODO: check its not a duplicate
 
-      $form['field_serial_number']['und'][0]['value']['#default_value'] = 1035;
+      $form['field_serial_number']['und'][0]['value']['#default_value'] = "1035";
      
       break;
 
