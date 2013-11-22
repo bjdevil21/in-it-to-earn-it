@@ -32,6 +32,9 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
     
       global $user;
       $account = $user;
+      
+      $cpath = drupal_get_path();
+      drupal_set_message($cpath);
     
       $randomSerial = rand(1000, 10000);
       // TODO: check its not a duplicate
