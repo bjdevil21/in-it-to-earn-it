@@ -30,11 +30,17 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
     case 'game_node_form':
     
+      global $user;
+      $account = $user;
+    
       $randomSerial = rand(1000, 10000);
       // TODO: check its not a duplicate
 
       $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
       $form['field_serial_number']['#disabled'] = true;
+      $form['field_facilitator']['und']['#default_value'] = $account;
+      $form['field_facilitator']['#disabled'] = true;
+      $form['field_current_game_state']['#disabled'] = true;
      
       break;
 
