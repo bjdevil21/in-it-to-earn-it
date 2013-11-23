@@ -62,9 +62,5 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 *********************************************************************/
 
 function add_users_to_game($form, &$form_state) {
-  drupal_set_message("title val" . $form['title']['#value']);
-  drupal_set_message("title def val" . $form['title']['#default_value']);
-  drupal_set_message("def value " . $form['field_serial_number']['und'][0]['value']['#default_value']);
   drupal_set_message("value #value" . $form['field_serial_number']['und'][0]['value']['#value']);
-  drupal_set_message("value 1" . $form['field_serial_number']['#value']);
 }
