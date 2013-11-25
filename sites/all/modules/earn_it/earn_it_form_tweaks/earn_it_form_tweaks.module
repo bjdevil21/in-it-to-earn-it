@@ -81,41 +81,34 @@ function earn_it_form_tweaks_node_presave($node) {
 *********************************************************************/
 
 function add_users_to_game($node) {
-  //field_playing_game set to nid of the game
-  // maybe und 0 target_id #value
-  // field_team_color is going ot be tid of the color
-  // und #default_value 0 but try #value
-  // field_student_state set to tid of init so 1
-  // try und #value 0 set to 1
-  // 16 - 23 for colors
   
   $gnid = $node->nid;
   $gameNum = $node->field_serial_number['und'][0]['value'];
   
-  /*$result = db_query("SELECT n.nid FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $node->title)); 
-  foreach($result as $record) {
-    $gnid = $record -> nid;
-    print $record -> nid;
-  } */
+  $numPlayers = $node->field_number_of_players['und'][0]['value'];
+  $currColor = 16;
 
-  $edit = array(
-    'name' => $gameNum . 'maroon',
-    'pass' => $gameNum . 'maroon',
-    // grab the color from the actual tid
-    // and incremet the tid when I put this in a loop
-    'status' => 1,
-    'field_student_state' => array(
-      'und' => array(
-        0 => array(
-          "tid" => 1))),
-    'field_playing_game' => array(
-      'und' => array(
-        0 => array(
-          "target_id" => $gnid))),
-    'field_team_color' => array(
-      'und' => array(
-        0 => array(
-          "tid" => 16))),
-  );
-  user_save(null, $edit);
+  for (var i=1; i<numPlayers + 1; i++) { // loops from 1 to the last player
+    $colorName = taxonomy_term_load(currColor) -> name;
+    $edit = array(
+      'name' => $gameNum . $colorName,
+      'pass' => $gameNum . $colorName,
+      'status' => 1,
+      'field_student_state' => array(
+        'und' => array(
+          0 => array(
+            "tid" => 1))),
+      'field_playing_game' => array(
+        'und' => array(
+          0 => array(
+            "target_id" => $gnid))),
+      'field_team_color' => array(
+        'und' => array(
+          0 => array(
+            "tid" => currColor))),
+    );
+    user_save(null, $edit);
+    currColor++;
+  
+  }
 }
