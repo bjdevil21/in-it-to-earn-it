@@ -63,7 +63,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
 function add_users_to_game($form, &$form_state) {
   drupal_set_message("value #value" . $form['field_serial_number']['und'][0]['value']['#value']);
-  drupal_set_message($form);
+  dpm($form);
   //field_playing_game set to nid of the game
   // maybe und 0 target_id #value
   // field_team_color is going ot be tid of the color
@@ -78,8 +78,8 @@ function add_users_to_game($form, &$form_state) {
     'status' => 1,
     'field_student_state' => array(
       'und' => array(
-        0 => array(
-          '#value' => 1))),
+        '#default_value' => array(
+          0 => 1))),
   );
   user_save(null, $edit);
 }
