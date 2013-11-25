@@ -82,7 +82,7 @@ function add_users_to_game($form, &$form_state) {
     'field_student_state' => array(
       'und' => array(
         0 => array(
-          "value" => 1))),
+          "tid" => 1))),
   );
   user_save(null, $edit);
 }
