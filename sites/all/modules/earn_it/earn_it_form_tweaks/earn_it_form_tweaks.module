@@ -60,21 +60,11 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
     }
 }
 
-function earn_it_form_tweaks_node_update($node) {
-  drupal_set_message("node update hit");
-  dpm($node);
-}
-
 function earn_it_form_tweaks_node_insert($node) {
-  drupal_set_message("node insert hit");
-  dpm($node);
-  add_users_to_game($node);
+  if ($node->type == "game")
+    add_users_to_game($node);
 }
 
-function earn_it_form_tweaks_node_presave($node) {
-  drupal_set_message("node presave hit");
-  dpm($node);
-}
 
 /*********************************************************************
   API
