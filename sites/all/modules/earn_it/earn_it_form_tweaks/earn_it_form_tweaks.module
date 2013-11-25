@@ -65,6 +65,16 @@ function earn_it_form_tweaks_node_update($node) {
   dpm($node);
 }
 
+function earn_it_form_tweaks_node_insert($node) {
+  drupal_set_message("node insert hit");
+  dpm($node);
+}
+
+function earn_it_form_tweaks_node_presave($node) {
+  drupal_set_message("node presave hit");
+  dpm($node);
+}
+
 /*********************************************************************
   API
 *********************************************************************/
