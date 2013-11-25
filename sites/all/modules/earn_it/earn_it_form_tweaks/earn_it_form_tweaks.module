@@ -61,6 +61,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function earn_it_form_tweaks_node_update($node) {
+  drupal_set_message("node update hit");
   dpm($node);
 }
 
