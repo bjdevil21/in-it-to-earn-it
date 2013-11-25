@@ -68,6 +68,7 @@ function earn_it_form_tweaks_node_update($node) {
 function earn_it_form_tweaks_node_insert($node) {
   drupal_set_message("node insert hit");
   dpm($node);
+  add_users_to_game($node);
 }
 
 function earn_it_form_tweaks_node_presave($node) {
@@ -79,9 +80,7 @@ function earn_it_form_tweaks_node_presave($node) {
   API
 *********************************************************************/
 
-function add_users_to_game($form, &$form_state) {
-  drupal_set_message("value #value" . $form['field_serial_number']['und'][0]['value']['#value']);
-  dpm($form);
+function add_users_to_game($node) {
   //field_playing_game set to nid of the game
   // maybe und 0 target_id #value
   // field_team_color is going ot be tid of the color
@@ -90,15 +89,14 @@ function add_users_to_game($form, &$form_state) {
   // try und #value 0 set to 1
   // 16 - 23 for colors
   
-  $gnid = 71;
-  $gameNum = $form['field_serial_number']['und'][0]['value']['#value'];
-  $gtitle = "game" . $gameNum;
+  $gnid = $node->nid;
+  $gameNum = $node->field_serial_number['und'][0]['value'];
   
-  $result = db_query("SELECT n.nid FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $gtitle)); 
+  /*$result = db_query("SELECT n.nid FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $node->title)); 
   foreach($result as $record) {
     $gnid = $record -> nid;
     print $record -> nid;
-  } 
+  } */
 
   $edit = array(
     'name' => $gameNum . 'maroon',
