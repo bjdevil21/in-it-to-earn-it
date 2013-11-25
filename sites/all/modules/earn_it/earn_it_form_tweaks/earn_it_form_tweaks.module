@@ -89,7 +89,7 @@ function add_users_to_game($node) {
   $currColor = 16;
 
   for ($i=0; $i<$numPlayers; $i++) { // loops from 1 to the last player
-    $colorName = taxonomy_term_load(currColor) -> name;
+    $colorName = taxonomy_term_load($currColor) -> name;
     $edit = array(
       'name' => $gameNum . $colorName,
       'pass' => $gameNum . $colorName,
@@ -105,10 +105,10 @@ function add_users_to_game($node) {
       'field_team_color' => array(
         'und' => array(
           0 => array(
-            "tid" => currColor))),
+            "tid" => $currColor))),
     );
     user_save(null, $edit);
-    currColor++;
+    $currColor++;
   
   }
 }
