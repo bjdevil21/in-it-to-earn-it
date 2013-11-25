@@ -73,16 +73,36 @@ function add_users_to_game($form, &$form_state) {
   // und #default_value 0 but try #value
   // field_student_state set to tid of init so 1
   // try und #value 0 set to 1
+  // 16 - 23 for colors
+  
+  $gnid = 71;
   $gameNum = $form['field_serial_number']['und'][0]['value']['#value'];
-  //$account -> is_new = TRUE;
+  $gtitle = "game" . $gameNum;
+  
+  $result = db_query("SELECT n.nid, FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $gtitle)); 
+  foreach($result as $record) {
+    $gnid = $record -> nid;
+    print $record -> nid;
+  } 
+
   $edit = array(
     'name' => $gameNum . 'maroon',
     'pass' => $gameNum . 'maroon',
+    // grab the color from the actual tid
+    // and incremet the tid when I put this in a loop
     'status' => 1,
     'field_student_state' => array(
       'und' => array(
         0 => array(
           "tid" => 1))),
+    'field_playing_game' => array(
+      'und' => array(
+        0 => array(
+          "target_id" => $gnid))),
+    'field_team_color' => array(
+      'und' => array(
+        0 => array(
+          "tid" => 16))),
   );
   user_save(null, $edit);
 }
