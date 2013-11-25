@@ -78,8 +78,8 @@ function add_users_to_game($form, &$form_state) {
     'status' => 1,
     'field_student_state' => array(
       'und' => array(
-        '#default_value' => array(
-          0 => 1))),
+        0 => array(
+          "value" => 1))),
   );
   user_save(null, $edit);
 }
