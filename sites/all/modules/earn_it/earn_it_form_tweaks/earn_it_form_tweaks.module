@@ -51,13 +51,17 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['field_facilitator']['#disabled'] = true;
         $form['field_current_game_state']['#disabled'] = true;
       
-        $form['#submit'][] = 'add_users_to_game';
+        //$form['#submit'][] = 'add_users_to_game';
       
       }
      
       break;
 
     }
+}
+
+function earn_it_form_tweaks_node_update($node) {
+  dpm($node);
 }
 
 /*********************************************************************
