@@ -79,7 +79,7 @@ function add_users_to_game($form, &$form_state) {
   $gameNum = $form['field_serial_number']['und'][0]['value']['#value'];
   $gtitle = "game" . $gameNum;
   
-  $result = db_query("SELECT n.nid, FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $gtitle)); 
+  $result = db_query("SELECT n.nid FROM node n WHERE n.title = (:ntitle)", array(':ntitle' => $gtitle)); 
   foreach($result as $record) {
     $gnid = $record -> nid;
     print $record -> nid;
