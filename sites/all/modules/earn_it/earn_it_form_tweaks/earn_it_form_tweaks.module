@@ -65,6 +65,13 @@ function earn_it_form_tweaks_node_insert($node) {
     add_users_to_game($node);
 }
 
+function earn_it_form_tweaks_node_load($node) {
+  $cpath = current_path();
+  if ($cpath == "student") {
+    drupal_set_message("on page student");
+  }
+}
+
 
 /*********************************************************************
   API
