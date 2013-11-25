@@ -88,7 +88,7 @@ function add_users_to_game($node) {
   $numPlayers = $node->field_number_of_players['und'][0]['value'];
   $currColor = 16;
 
-  for (var i=1; i<numPlayers + 1; i++) { // loops from 1 to the last player
+  for ($i=0; $i<$numPlayers; $i++) { // loops from 1 to the last player
     $colorName = taxonomy_term_load(currColor) -> name;
     $edit = array(
       'name' => $gameNum . $colorName,
