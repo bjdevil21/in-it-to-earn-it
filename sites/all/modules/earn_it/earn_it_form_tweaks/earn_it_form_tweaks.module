@@ -50,9 +50,6 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['field_facilitator']['und']['#default_value'] = $account->uid;
         $form['field_facilitator']['#disabled'] = true;
         $form['field_current_game_state']['#disabled'] = true;
-      
-        //$form['#submit'][] = 'add_users_to_game';
-      
       }
      
       break;
@@ -62,6 +59,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
 function earn_it_form_tweaks_node_insert($node) {
   if ($node->type == "game")
+    add_game_to_facilitator($node)
     add_users_to_game($node);
 }
 
@@ -77,6 +75,11 @@ function earn_it_form_tweaks_node_load($node) {
 /*********************************************************************
   API
 *********************************************************************/
+
+function add_game_to_facilitator($node) {
+  global $user;
+  $user->field_playing_game['und'][0]['target_id'] = $node->nid;
+}
 
 function add_users_to_game($node) {
   
