@@ -80,7 +80,7 @@ function add_game_to_facilitator($node) {
   global $user;
   $existing = user_load($user->uid);
   $edit = (array) $existing;
-  $edit['field_playing_game']['und'][0]['value'] = $node->nid;
+  $edit['field_playing_game']['und'][0]['target_id'] = $node->nid;
   user_save($existing, $edit);
 }
 
