@@ -78,7 +78,10 @@ function earn_it_form_tweaks_node_load($node) {
 
 function add_game_to_facilitator($node) {
   global $user;
-  $user->field_playing_game['und'][0]['target_id'] = $node->nid;
+  $existing = user_load($user->uid);
+  $edit = (array) $existing;
+  $edit['field_playing_game']['und'][0]['value'] = $node->nid;
+  user_save($existing, $edit);
 }
 
 function add_users_to_game($node) {
