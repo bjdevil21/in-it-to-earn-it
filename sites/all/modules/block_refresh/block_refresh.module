@@ -73,19 +73,19 @@ function block_refresh_form_block_admin_configure_alter(&$form, $form_state) {
     '#type' => 'checkbox',
     '#title' => t('Enable block to be refreshed automatically'),
     '#description' => t('If checked, then the content of this block will be refresh automatically every x seconds defined below.'),
-    '#default_value' => isset($settings[$block_id]['auto']) ? $settings[$block_id]['auto'] : variable_get('block_refresh_default_automatic', BLOCK_REFRESH_DEFAULT_AUTOMATIC),
+    '#default_value' => isset($settings[str_replace('_', '-', $block_id)]['auto']) ? $settings[str_replace('_', '-', $block_id)]['auto'] : variable_get('block_refresh_default_automatic', BLOCK_REFRESH_DEFAULT_AUTOMATIC),
   );
   $form['block_refresh']['block_refresh_timer'] = array(
     '#type' => 'textfield',
     '#title' => t('Block refresh timer'),
     '#description' => t('If this block is set to be refreshed automatically (checkbox above is checked), enter the number of <strong>seconds</strong> between each refresh.'),
-    '#default_value' => isset($settings[$block_id]['timer']) ? $settings[$block_id]['timer'] : variable_get('block_refresh_autorefresh_default_timer', BLOCK_REFRESH_DEFAULT_AUTOMATIC_TIMER),
+    '#default_value' => isset($settings[str_replace('_', '-', $block_id)]['timer']) ? $settings[str_replace('_', '-', $block_id)]['timer'] : variable_get('block_refresh_autorefresh_default_timer', BLOCK_REFRESH_DEFAULT_AUTOMATIC_TIMER),
   );
   $form['block_refresh']['block_refresh_manual'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable block to be refreshed manually'),
     '#description' => t('If checked, then the content of this block may be refreshed manually by the user, by clicking on a provided (themeable) button in the block\'s subject header.'),
-    '#default_value' => isset($settings[$block_id]['manual']) ? $settings[$block_id]['manual'] : variable_get('block_refresh_default_manual', BLOCK_REFRESH_DEFAULT_MANUAL),
+    '#default_value' => isset($settings[str_replace('_', '-', $block_id)]['manual']) ? $settings[str_replace('_', '-', $block_id)]['manual'] : variable_get('block_refresh_default_manual', BLOCK_REFRESH_DEFAULT_MANUAL),
   );
   $form['#submit'][] = 'block_refresh_submit';
 }
@@ -99,15 +99,15 @@ function block_refresh_submit($form, &$form_state) {
   $settings = variable_get('block_refresh_settings', array());
   // If the auto (enable) checkbox AND the manual checkbox are unchecked, we want to remove the current block from the array
   if(!$form['block_refresh']['block_refresh_auto']['#checked'] && !$form['block_refresh']['block_refresh_manual']['#checked']) {
-    unset($settings[$block_id]);
+    unset($settings[str_replace('_', '-', $block_id)]);
   }
   // Otherwise, we need to setup the block to be configured for block refresh
   else {
-    $settings[$block_id]['element'] = $block_id;
-    $settings[$block_id]['auto'] = $form_state['values']['block_refresh_auto'];
-    $settings[$block_id]['manual'] = $form_state['values']['block_refresh_manual'];
-    $settings[$block_id]['timer'] = $form_state['values']['block_refresh_timer'];
-    $settings[$block_id]['block'] = array('block' => $form_state['values']['module'], 'delta' => $form_state['values']['delta']); 
+    $settings[str_replace('_', '-', $block_id)]['element'] = $block_id;
+    $settings[str_replace('_', '-', $block_id)]['auto'] = $form_state['values']['block_refresh_auto'];
+    $settings[str_replace('_', '-', $block_id)]['manual'] = $form_state['values']['block_refresh_manual'];
+    $settings[str_replace('_', '-', $block_id)]['timer'] = $form_state['values']['block_refresh_timer'];
+    $settings[str_replace('_', '-', $block_id)]['block'] = array('block' => $form_state['values']['module'], 'delta' => $form_state['values']['delta']); 
   }
   variable_set('block_refresh_settings', $settings);
 }
@@ -145,7 +145,7 @@ function block_refresh_block_content($module = NULL, $delta = NULL) {
   
   $settings = variable_get('block_refresh_settings', array());
   // If automatic refresh AND manual refresh are both disabled...
-  if (!$settings['block-' . $module . '-' . $delta]['auto'] && !$settings['block-' . $module . '-' . $delta]['manual']) {
+  if (!$settings[str_replace('_', '-', 'block-' . $module . '-' . $delta)]['auto'] && !$settings[str_replace('_', '-', 'block-' . $module . '-' . $delta)]['manual']) {
     drupal_not_found();
   }
   //Validate args and get referrering page args from end.  Set as path.
