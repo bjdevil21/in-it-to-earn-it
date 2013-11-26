@@ -67,7 +67,7 @@ function earn_it_form_tweaks_init() {
   $cpath = current_path();
   if ($cpath == "node/59") {
     drupal_set_message("on page student");
-    //FIXME: change the continue text to be a button
+    drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
 }
 
