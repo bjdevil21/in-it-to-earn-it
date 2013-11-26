@@ -59,7 +59,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
 function earn_it_form_tweaks_node_insert($node) {
   if ($node->type == "game")
-    add_game_to_facilitator($node)
+    add_game_to_facilitator($node);
     add_users_to_game($node);
 }
 
