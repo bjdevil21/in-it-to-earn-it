@@ -27,8 +27,8 @@
       
       function goToWeekOne() {
       
-        /*$.get( 
-              theURL + "user_progress/"+ $user->uid + "/" + 2,
+        $.get( 
+              theURL + "user_progress/"+ 1 + "/" + 2,
               function(data) {
                 if (data.form_errors) {
                   alert("error");
@@ -37,7 +37,7 @@
                   alert("success");
                 }
               }
-            );*/
+            );
         // FIXME: actually have this do something
         alert("continue clicked");
       }
