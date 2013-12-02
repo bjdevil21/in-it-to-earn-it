@@ -71,6 +71,21 @@ function earn_it_form_tweaks_init() {
   }
 }
 
+function earn_it_form_tweaks_menu() {
+  $items = array();
+
+  $items['user_progress/%'] = array(
+    'title' => 'Update student progress', 
+    'description' => 'Callback for updating student progress.', 
+    'page callback' => 'update_student_progress_php_function', 
+    'page arguments' => array(2),
+    'access arguments' => array('access content'), 
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
 
 /*********************************************************************
   API
@@ -115,4 +130,15 @@ function add_users_to_game($node) {
     $currColor++;
   
   }
+}
+
+function update_student_progress_php_function($arg1, $arg2) {
+  $cuser = user_load($arg1); // arg1 is uid
+  $edit = array(
+    'field_student_state' => array(
+        'und' => array(
+          0 => array(
+            "tid" => $arg2))), // arg2 is the tid of state
+  )
+  user_save($cuser, $edit);
 }
