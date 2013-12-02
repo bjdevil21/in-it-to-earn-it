@@ -44,7 +44,7 @@
       
       function handleClick() {
  
-        if (window.event.srcElement.id == "panels-ipe-paneid-10") {
+        if (window.event.srcElement.id == "week1") {
           goToWeekOne();
 
         }
@@ -55,7 +55,7 @@
     
       
       
-      window.onload=document.getElementById("panels-ipe-paneid-10").innerHTML = "<button>Continue</button>";
+      window.onload=document.getElementById("panels-ipe-paneid-10").innerHTML = "<button id='week1'>Continue</button>";
     }
   };
 })(jQuery);
