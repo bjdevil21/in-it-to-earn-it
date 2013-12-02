@@ -54,7 +54,7 @@
         alert("continue clicked");
       }
       
-      document.getElementById("panels-ipe-paneid-10").innerHTML = "<button>Continue</button>"      
+      window.onload=document.getElementById("panels-ipe-paneid-10").innerHTML = "<button>Continue</button>";
     }
   };
 })(jQuery);
