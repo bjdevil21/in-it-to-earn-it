@@ -25,19 +25,7 @@
       
       var theURL = getBaseURL();
       
-      function handleClick() {
- 
-        if (window.event.srcElement.id == "panels-ipe-paneid-10") {
-          goToWeekOne();
-
-        }
-      }
-
-      
-      document.onclick = handleClick;
-    
       function goToWeekOne() {
-        global $user;
       
         /*$.get( 
               theURL + "user_progress/"+ $user->uid + "/" + 2,
@@ -53,6 +41,19 @@
         // FIXME: actually have this do something
         alert("continue clicked");
       }
+      
+      function handleClick() {
+ 
+        if (window.event.srcElement.id == "panels-ipe-paneid-10") {
+          goToWeekOne();
+
+        }
+      }
+
+      
+      document.onclick = handleClick;
+    
+      
       
       window.onload=document.getElementById("panels-ipe-paneid-10").innerHTML = "<button>Continue</button>";
     }
