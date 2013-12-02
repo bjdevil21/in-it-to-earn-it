@@ -133,7 +133,7 @@ function add_users_to_game($node) {
 }
 
 function update_student_progress_php_function($arg1, $arg2) {
-  drupal_set_message($arg1 . ":" $arg2);
+  drupal_set_message($arg1 . ":" . $arg2);
   $cuser = user_load($arg1); // arg1 is uid
   $edit = array(
     'field_student_state' => array(
