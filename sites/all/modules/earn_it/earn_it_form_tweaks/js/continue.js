@@ -34,12 +34,10 @@
                   alert("error");
                 }
                 else {
-                  alert("success");
+                  //alert("success");
                 }
               }
             );
-        // FIXME: actually have this do something
-        alert("continue clicked");
       }
       
       function handleClick() {
