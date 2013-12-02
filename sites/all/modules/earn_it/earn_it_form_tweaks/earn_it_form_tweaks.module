@@ -78,7 +78,7 @@ function earn_it_form_tweaks_menu() {
     'title' => 'Update student progress', 
     'description' => 'Callback for updating student progress.', 
     'page callback' => 'update_student_progress_php_function', 
-    'page arguments' => array(2),
+    'page arguments' => array(1, 2),
     'access arguments' => array('access content'), 
     'type' => MENU_CALLBACK,
   );
