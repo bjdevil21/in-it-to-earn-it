@@ -39,7 +39,7 @@
       function goToWeekOne() {
         global $user;
       
-        $.get( 
+        /*$.get( 
               theURL + "user_progress/"+ $user->uid + "/" + 2,
               function(data) {
                 if (data.form_errors) {
@@ -49,7 +49,7 @@
                   alert("success");
                 }
               }
-            );
+            );*/
         // FIXME: actually have this do something
         alert("continue clicked");
       }
