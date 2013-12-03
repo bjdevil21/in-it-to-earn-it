@@ -66,7 +66,9 @@ function earn_it_form_tweaks_node_insert($node) {
 function earn_it_form_tweaks_init() {
   $cpath = current_path();
   if ($cpath == "node/59") {
+    global $user;
     drupal_set_message("on page student");
+    drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
 }

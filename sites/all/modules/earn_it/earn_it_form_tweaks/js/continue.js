@@ -28,7 +28,7 @@
       function goToWeekOne() {
       
         $.get( 
-              theURL + "user_progress/"+ 1 + "/" + 2,
+              theURL + "user_progress/" + Drupal.settings.earnituid.key + "/" + 2,
               function(data) {
                 if (data.form_errors) {
                   alert("error");
