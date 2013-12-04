@@ -53,7 +53,7 @@
     
       
       
-      window.onload=document.getElementById("panels-ipe-paneid-10").innerHTML = "<button id='week1'>Continue</button>";
+      window.onload=document.getElementById("studentinstructions").innerHTML = "<button id='week1'>Continue</button>";
     }
   };
 })(jQuery);
