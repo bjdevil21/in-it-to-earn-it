@@ -187,6 +187,7 @@ function update_student_progress_php_function($arg1, $arg2) {
   );
   user_save($cuser, $edit);
   check_all_students_and_add_button($arg2);
+}
   
 function update_facil_progress_php_function($arg1, $arg2) {
   $cnode = node_load($arg1); // arg1 is nid
