@@ -156,8 +156,11 @@ function check_all_students_and_add_button($check_for) {
   $result2 = db_query('SELECT f.entity_id FROM field_data_field_playing_game f WHERE f.field_playing_game_target_id = :gnid', array(':gnid' => $gnid));
 
   $done = true;
+  
+  drupal_set_message("about to enter second loop");
 
   foreach ($result2 as $record2) {
+    drupal_set_message($record2->entity_id . " ; ");
     if ($record2 -> entity_id != $user->uid) { // make sure its a student not the facilitator
       $cuser = user_load($record2->entity_id);
       if ($cuser -> field_student_state['und'][0]['tid'] != $check_for) {
@@ -167,6 +170,7 @@ function check_all_students_and_add_button($check_for) {
   }
 
   if ($done) {
+    drupal_set_message("hitting done if");
     drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js'); 
   }
