@@ -167,12 +167,8 @@ function check_all_students_and_add_button($check_for) {
   }
 
   if ($done) {
-    print "done";
-    // FIXME: have this call JS
-    // week1facilbutton
-  }
-  else {
-    print "not done";
+    drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
+    drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js'); 
   }
   
 }
