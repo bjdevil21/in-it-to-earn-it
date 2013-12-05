@@ -33,12 +33,13 @@
         $.get( 
               theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + newGameState,
               function(data) {
-                alert(data);
+                console.log(data);
                 if (data.form_errors) {
                   alert("error");
                 }
                 else {
                   //alert("success");
+                  document.getElementById("week1facil").onclick = function() {return true;};
                 }
               }
             );
