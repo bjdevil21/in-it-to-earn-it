@@ -26,9 +26,10 @@
       var theURL = getBaseURL();
       
       function progressFacil() {
+        var newGameState = Drupal.settings.gamestate + 1;
       
         $.get( 
-              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + Drupal.settings.gamestate+1,
+              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + newGameState,
               function(data) {
                 if (data.form_errors) {
                   alert("error");
