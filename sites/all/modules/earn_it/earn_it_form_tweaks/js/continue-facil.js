@@ -58,7 +58,7 @@
       //alert("continuefacil called");
       
       window.onload=document.getElementById("facilbutton").innerHTML = "<form onsubmit='progressFacil()'><input type='submit' value='Continue'></form>";
-      document.getElementById('week1facil').addEventListener('click', progressFacil);
+      //document.getElementById('week1facil').addEventListener('click', progressFacil);
     }
   };
 })(jQuery);
