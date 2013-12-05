@@ -49,7 +49,7 @@
       }
 
       
-      document.onclick = handleClick;
+      //document.onclick = handleClick;
     
       
       
