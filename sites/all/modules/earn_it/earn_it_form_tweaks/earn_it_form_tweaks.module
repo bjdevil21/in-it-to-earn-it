@@ -185,7 +185,7 @@ function update_student_progress_php_function($arg1, $arg2) {
           0 => array(
             "tid" => $arg2))), // arg2 is the tid of state
   );
-  //if (isset(user_save($cuser, $edit))
+  if (isset(user_save($cuser, $edit)->uid)
     check_all_students_and_add_button($arg2);
 }
   
