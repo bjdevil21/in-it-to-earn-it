@@ -38,6 +38,7 @@
                   alert("error");
                 }
                 else {
+                  alert(newGameState);
                   //alert("success");
                 }
               }
@@ -58,7 +59,7 @@
       //alert("continuefacil called");
       
       document.getElementById("facilbutton").innerHTML = "<form id='week1facil'><input type='submit' value='Continue'></form>";
-      document.getElementById("week1facil").onsubmit = progressFacil();
+      //document.getElementById("week1facil").onsubmit = progressFacil();
       //document.getElementById('week1facil').addEventListener('click', progressFacil);
     }
   };
