@@ -72,6 +72,15 @@ function earn_it_form_tweaks_init() {
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
   else if ($cpath == "node/58") {
+    global $user;
+    $user = user_load($user->uid);
+
+    $result = db_query('SELECT f.field_playing_game_target_id FROM field_data_field_playing_game f WHERE f.entity_id = :cuid', array(':cuid' => $user->uid));
+
+    foreach ($result as $record) {
+      $gnid = $record -> field_playing_game_target_id;
+    }
+    drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
   }
 }
