@@ -42,7 +42,7 @@
       
       function handleClick() {
  
-        if (window.event.srcElement.id == "facilbutton") {
+        if (window.event.srcElement.id == "week1facil") {
           progressFacil();
 
         }
