@@ -53,11 +53,11 @@
       }
 
       
-      document.onclick = handleClick;
+      //document.onclick = handleClick;
     
       //alert("continuefacil called");
       
-      window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
+      window.onload=document.getElementById("facilbutton").innerHTML = "<form onsubmit='progressFacil()'><input type='submit' value='Continue'></form>";
       document.getElementById('week1facil').addEventListener('click', progressFacil);
     }
   };
