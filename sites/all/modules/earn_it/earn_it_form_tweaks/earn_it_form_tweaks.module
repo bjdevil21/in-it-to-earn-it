@@ -81,7 +81,7 @@ function earn_it_form_tweaks_init() {
       $gnid = $record -> field_playing_game_target_id;
     }
     $cgame = node_load($gnid);
-    drupal_add_js(array('gamestate' => array('key' => $cgame->field_current_game_state['und'][0]['tid'])), 'setting');
+    //drupal_add_js(array('gamestate' => array('key' => $cgame->field_current_game_state['und'][0]['tid'])), 'setting');
     drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
   }

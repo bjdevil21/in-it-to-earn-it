@@ -26,20 +26,20 @@
       var theURL = getBaseURL();
       
       function progressFacil() {
-        var newGameState = Drupal.settings.gamestate.key + 1;
+        //var newGameState = Drupal.settings.gamestate.key + 1;
         
         //FIXME: call to a check based on gamestate here
       
         $.get( 
-              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + newGameState,
+              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + 2,
               function(data) {
                 console.log(data);
                 if (data.form_errors) {
                   alert("error");
                 }
                 else {
-                  alert(newGameState);
-                  //alert("success");
+                  //alert(newGameState);
+                  alert("success");
                 }
               }
             );
