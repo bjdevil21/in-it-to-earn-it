@@ -33,12 +33,12 @@
         $.get( 
               theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + newGameState,
               function(data) {
-                console.log(data);
+                alert(data);
                 if (data.form_errors) {
                   alert("error");
                 }
                 else {
-                  alert("success");
+                  //alert("success");
                 }
               }
             );
