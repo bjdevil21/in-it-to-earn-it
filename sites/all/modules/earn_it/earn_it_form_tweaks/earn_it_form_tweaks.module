@@ -71,7 +71,7 @@ function earn_it_form_tweaks_init() {
     drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
-  else if ($$cpath == "node/58") {
+  else if ($cpath == "node/58") {
     drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
   }
 }
