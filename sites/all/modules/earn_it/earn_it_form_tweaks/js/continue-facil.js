@@ -27,10 +27,13 @@
       
       function progressFacil() {
         var newGameState = Drupal.settings.gamestate.key + 1;
+        
+        //FIXME: call to a check based on gamestate here
       
         $.get( 
               theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + newGameState,
               function(data) {
+                console.log(data);
                 if (data.form_errors) {
                   alert("error");
                 }
