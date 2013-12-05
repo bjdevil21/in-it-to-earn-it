@@ -53,12 +53,14 @@
         }
       }
 
+      window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
+      document.getElementById('facilbutton').addEventListener('click', facilProgress);
       
       //document.onclick = handleClick;
     
       //alert("continuefacil called");
       
-      document.getElementById("facilbutton").innerHTML = "<form id='week1facil'><input type='submit' value='Continue'></form>";
+      //document.getElementById("facilbutton").innerHTML = "<form id='week1facil'><input type='submit' value='Continue'></form>";
       //document.getElementById("week1facil").onsubmit = progressFacil();
       //document.getElementById('week1facil').addEventListener('click', progressFacil);
     }
