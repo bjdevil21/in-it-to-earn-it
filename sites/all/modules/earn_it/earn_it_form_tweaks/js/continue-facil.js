@@ -28,6 +28,8 @@
       function progressFacil() {
         var newGameState = Drupal.settings.gamestate.key + 1;
         
+        $("div").clearQueue();
+        
         //FIXME: call to a check based on gamestate here
       
         $.get( 
@@ -39,7 +41,6 @@
                 }
                 else {
                   //alert("success");
-                  document.getElementById("week1facil").onclick = function() {return true;};
                 }
               }
             );
