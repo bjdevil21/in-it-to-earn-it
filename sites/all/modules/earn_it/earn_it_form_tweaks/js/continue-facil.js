@@ -42,7 +42,7 @@
       
       function handleClick() {
  
-        if (window.event.srcElement.id == "week1facil") {
+        if (window.event.srcElement.id == "facilbutton") {
           progressFacil();
 
         }
@@ -53,7 +53,7 @@
     
       alert("continuefacil called");
       
-      document.getElementById("week1facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
+      document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
     }
   };
 })(jQuery);
