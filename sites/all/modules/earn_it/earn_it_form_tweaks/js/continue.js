@@ -54,6 +54,7 @@
       
       
       window.onload=document.getElementById("studentinstructions").innerHTML = "<button id='week1'>Continue</button>";
+      document.getElementById('studentinstructions').addEventListener('click', goToWeekOne);
     }
   };
 })(jQuery);
