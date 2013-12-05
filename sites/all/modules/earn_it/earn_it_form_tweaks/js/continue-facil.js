@@ -53,7 +53,7 @@
     
       alert("continuefacil called");
       
-      document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
+      window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
     }
   };
 })(jQuery);
