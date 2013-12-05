@@ -28,7 +28,7 @@
       function progressFacil() {
       
         $.get( 
-              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + 2,
+              theURL + "facil_progress/" + Drupal.settings.gamenid.key + "/" + Drupal.settings.gamestate+1,
               function(data) {
                 if (data.form_errors) {
                   alert("error");
