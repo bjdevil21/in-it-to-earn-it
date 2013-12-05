@@ -34,7 +34,7 @@
                   alert("error");
                 }
                 else {
-                  //alert("success");
+                  alert("success");
                 }
               }
             );
@@ -53,7 +53,7 @@
     
       
       
-      window.onload=document.getElementById("week1facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
+      document.getElementById("week1facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
     }
   };
 })(jQuery);
