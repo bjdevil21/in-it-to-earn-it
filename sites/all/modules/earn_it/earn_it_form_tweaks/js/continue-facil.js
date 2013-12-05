@@ -51,7 +51,7 @@
       
       document.onclick = handleClick;
     
-      alert("continuefacil called");
+      //alert("continuefacil called");
       
       window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
     }
