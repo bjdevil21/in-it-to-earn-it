@@ -54,7 +54,7 @@
       }
 
       window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue</button>";
-      document.getElementById('facilbutton').addEventListener('click', facilProgress);
+      document.getElementById('facilbutton').addEventListener('click', progressFacil);
       
       //document.onclick = handleClick;
     
