@@ -52,6 +52,8 @@
 
         }
       }
+      
+      alert("week 1 continue called");
 
       window.onload=document.getElementById("facilbutton").innerHTML = "<button id='week1facil'>Continue2</button>";
       document.getElementById('facilbutton').addEventListener('click', progressFacil);
