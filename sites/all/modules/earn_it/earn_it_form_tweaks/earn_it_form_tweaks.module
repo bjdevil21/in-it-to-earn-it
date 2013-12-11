@@ -63,7 +63,7 @@ function earn_it_form_tweaks_node_insert($node) {
     add_users_to_game($node);
 }
 
-function earn_it_form_tweaks_init() {
+/*function earn_it_form_tweaks_init() {
   //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
   $cpath = current_path();
   if ($cpath == "node/59") { // student page
@@ -96,7 +96,7 @@ function earn_it_form_tweaks_init() {
 
     //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
   }
-}
+}*/
 
 function earn_it_form_tweaks_menu() {
   $items = array();
