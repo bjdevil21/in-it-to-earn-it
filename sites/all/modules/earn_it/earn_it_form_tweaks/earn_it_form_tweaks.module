@@ -64,7 +64,7 @@ function earn_it_form_tweaks_node_insert($node) {
 }
 
 function earn_it_form_tweaks_init() {
-  drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
+  //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
   $cpath = current_path();
   if ($cpath == "node/59") { // student page
     global $user;
