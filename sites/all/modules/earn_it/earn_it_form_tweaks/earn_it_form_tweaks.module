@@ -58,9 +58,10 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function earn_it_form_tweaks_node_insert($node) {
-  if ($node->type == "game")
+  if ($node->type == "game") {
     add_game_to_facilitator($node);
     add_users_to_game($node);
+  }
 }
 
 /*function earn_it_form_tweaks_init() {
@@ -115,6 +116,15 @@ function earn_it_form_tweaks_menu() {
     'description' => 'Callback for updating facilitator progress.', 
     'page callback' => 'update_facil_progress_php_function', 
     'page arguments' => array(1, 2),
+    'access arguments' => array('access content'), 
+    'type' => MENU_CALLBACK,
+  );
+  
+  $items['create_response/%'] = array(
+    'title' => 'Create a response to an activity', 
+    'description' => 'Callback for creating a response node.', 
+    'page callback' => 'create_response_php_function', 
+    'page arguments' => array(1, 2, 3),
     'access arguments' => array('access content'), 
     'type' => MENU_CALLBACK,
   );
@@ -221,4 +231,25 @@ function update_facil_progress_php_function($arg1, $arg2) {
   $cnode = node_load($arg1); // arg1 is nid
   $cnode -> field_current_game_state['und'][0]['tid'] = $arg2; // tid
   node_save($cnode);
+}
+
+function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours
+
+  $cuser = user_load($arg2);
+  $values = array(
+    'type' => 'response',
+    'uid' => $cuser->uid,
+    'status' => 1,
+    'comment' => 0,
+    'promote' => 0,
+  );
+  $entity = entity_create('node', $values);
+  $ewrapper = entity_metadata_wrapper('node', $entity);
+  $ewrapper->title->set($cuser->name . $arg1);
+
+  $ewrapper->field_selected_activity->set(intval($arg1));
+  $ewrapper->field_selecting_user->set(intval($arg2));
+  $ewrapper->field_selected_hours->set(intval($arg3));
+  $ewrapper->save();
+
 }
