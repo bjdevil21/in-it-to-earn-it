@@ -171,6 +171,18 @@ function add_users_to_game($node) {
         'und' => array(
           0 => array(
             "tid" => $currColor))),
+      'field_gpa' => array(
+        'und' => array(
+          0 => array(
+            "value" => 0))),
+      'field_act_score' => array(
+        'und' => array(
+          0 => array(
+            "value" => 0))),
+      'field_scholarship_money' => array(
+        'und' => array(
+          0 => array(
+            "value" => 0))),
     );
     user_save(null, $edit);
     $currColor++;
@@ -235,6 +247,7 @@ function update_facil_progress_php_function($arg1, $arg2) {
 
 function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours
 
+  // create and save the response node
   $cuser = user_load($arg2);
   $values = array(
     'type' => 'response',
@@ -251,5 +264,8 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   $ewrapper->field_selecting_user->set(intval($arg2));
   $ewrapper->field_selected_hours->set(intval($arg3));
   $ewrapper->save();
+  
+  // add scholarship money to the user
+  
 
 }
