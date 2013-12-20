@@ -266,6 +266,26 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   $ewrapper->save();
   
   // add scholarship money to the user
-  
+  $cnode = node_load($arg1);
+  $cscholarship = $cuser->field_scholarship_money['und'][0]['value'];
 
+  if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
+    $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
+  }
+  else {
+    $cscholarship += ($cnode->field_scholarship_per_hour['und'][0]['value'] * $arg3);
+  }
+
+
+
+
+  
+  // FIXME: also save ACT and GPA
+  $edit = array(
+    'field_scholarship_money' => array(
+        'und' => array(
+          0 => array(
+            "value" => $cscholarship))),
+  );
+  user_save($cuser, $edit);
 }
