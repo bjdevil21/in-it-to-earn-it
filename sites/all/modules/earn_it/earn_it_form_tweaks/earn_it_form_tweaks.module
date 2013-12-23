@@ -128,6 +128,15 @@ function earn_it_form_tweaks_menu() {
     'access arguments' => array('access content'), 
     'type' => MENU_CALLBACK,
   );
+  
+  $items['update_student_gpa_act/%'] = array(
+    'title' => 'mosify student GPA and ACT score', 
+    'description' => 'Callback for updating GPA and ACT.', 
+    'page callback' => 'update_student_gpa_act_php_function', 
+    'page arguments' => array(1, 2, 3),
+    'access arguments' => array('access content'), 
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -286,6 +295,24 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
         'und' => array(
           0 => array(
             "value" => $cscholarship))),
+  );
+  user_save($cuser, $edit);
+}
+
+function update_student_gpa_act_php_function ($arg1, $arg2, $arg3) {
+// uid, gpa, act
+  $cuser = user_load($arg1);
+
+  $edit = array(
+    'field_gpa' => array(
+        'und' => array(
+          0 => array(
+            "value" => $arg2))),
+    'field_act_score' => array(
+        'und' => array(
+          0 => array(
+            "value" => $arg3))),
+
   );
   user_save($cuser, $edit);
 }
