@@ -28,11 +28,7 @@
       function addSliderEvents() {
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
-          console.log(sliders[i]);
-          var cname = sliders[i].id;
-          var idnum = parseInt(cname.substring(11));
           sliders[i].onchange = function(e) {
-            console.log(this.id);
             document.getElementById('hourschosen' + parseInt(this.id.substring(11))).innerHTML = this.value;
           }
         }
