@@ -64,16 +64,22 @@ function earn_it_form_tweaks_node_insert($node) {
   }
 }
 
-/*function earn_it_form_tweaks_init() {
+function earn_it_form_tweaks_init() {
   //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
   $cpath = current_path();
   if ($cpath == "node/59") { // student page
     global $user;
+    $user = user_load($user->uid);
     drupal_set_message("on page student");
-    drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
-    drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
+    // tids 2, 4 and 6 are where they choose activities
+    //drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
+    $cstate = $user->field_student_state['und'][0]['tid'];
+    if ($cstate == 2 || $cstate == 4 || $cstate == 6) {
+      drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/sliders.js');
+    }
+    //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
-  else if ($cpath == "node/58") { // facilitator page
+  /*else if ($cpath == "node/58") { // facilitator page
     global $user;
     $user = user_load($user->uid);
 
@@ -96,8 +102,8 @@ function earn_it_form_tweaks_node_insert($node) {
     //drupal_add_js(array('gamestate' => array('key' => $cgame->field_current_game_state['und'][0]['tid'])), 'setting');
 
     //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
-  }
-}*/
+  }*/
+}
 
 function earn_it_form_tweaks_menu() {
   $items = array();
