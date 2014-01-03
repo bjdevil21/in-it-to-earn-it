@@ -29,8 +29,10 @@
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
           console.log(sliders[i]);
+          var cname = sliders[i].id;
+          var idnum = parseInt(cname.substring(11));
           sliders[i].onchange = function(e) {
-             document.getElementById('hourschosen' + 9).innerHTML = this.value;
+             document.getElementById('hourschosen' + idnum).innerHTML = this.value;
           }
         }
       }
