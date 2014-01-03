@@ -32,8 +32,8 @@
           var cname = sliders[i].id;
           var idnum = parseInt(cname.substring(11));
           sliders[i].onchange = function(e) {
-            console.log(this);
-            document.getElementById('hourschosen' + idnum).innerHTML = this.value;
+            console.log(this.id);
+            document.getElementById('hourschosen' + parseInt(this.id.substring(11))).innerHTML = this.value;
           }
         }
       }
