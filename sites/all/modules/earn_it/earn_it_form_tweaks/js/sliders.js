@@ -29,6 +29,9 @@
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
           console.log(sliders[i]);
+          sliders[i].onchange = function(e) {
+             document.getElementById('hourschosen' + 9).innerHTML = this.value;
+          }
         }
       }
       
