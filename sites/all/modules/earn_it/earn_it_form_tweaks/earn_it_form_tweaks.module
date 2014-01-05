@@ -193,7 +193,7 @@ function add_users_to_game($node) {
       'field_act_score' => array(
         'und' => array(
           0 => array(
-            "value" => 0))),
+            "value" => 22))),
       'field_scholarship_money' => array(
         'und' => array(
           0 => array(
