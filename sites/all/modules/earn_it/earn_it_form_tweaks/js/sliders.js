@@ -48,6 +48,12 @@
             if(this.classList.contains("week1acaslider")) {
               updateTotalHours("week1acahours", "totalhoursacademic", "week1subtotal", "Total Academic Hours: ", "week1totalhours");
             }
+            else if (this.classList.contains("week1extraslider") {
+              updateTotalHours("week1extrahours", "totalhoursextra", "week1subtotal", "Total Extracurricular Hours: ", "week1totalhours");
+            }
+            else if (this.classList.contains("week1socialslider") {
+              updateTotalHours("week1socialhours", "totalhourssocial", "week1subtotal", "Total Social Hours: ", "week1totalhours");
+            }
             
           }
         }
