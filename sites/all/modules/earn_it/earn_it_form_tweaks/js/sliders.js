@@ -30,6 +30,7 @@
         for(var i=0; i<sliders.length; i++) { 
           sliders[i].onchange = function(e) {
             document.getElementById('hourschosen' + parseInt(this.id.substring(11))).innerHTML = this.value;
+            console.log(this.classList);
           }
         }
       }
