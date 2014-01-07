@@ -25,12 +25,30 @@
       
       var theURL = getBaseURL();
       
+      function updateTotalHours(hdivs, stdiv, stclass, ststring, tdiv) {
+        var hoursDivs = document.getElementsByClassName(hdivs);
+        var subtotalHours = 0;
+        for (var j=0; j<hoursDivs.length; j++) {
+          subtotalHours += parseInt(hoursDivs[i].innerHTML);
+        }
+        document.getElementById(stdiv).innerHTML = ststring + subtotalHours;
+        var subtotalDivs = document.getElementsByClassName(stclass);
+        var totalHours = 0;
+        totalHours += parseInt(subtotalDivs[0].innerHTML.substring(22));
+        totalHours += parseInt(subtotalDivs[1].innerHTML.substring(29));
+        totalHours += parseInt(subtotalDivs[2].innerHTML.substring(20));
+        document.getElementById(tdiv).innerHTML = "Total Hours: " + totalHours;
+      }
+      
       function addSliderEvents() {
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
           sliders[i].onchange = function(e) {
             document.getElementById('hourschosen' + parseInt(this.id.substring(11))).innerHTML = this.value;
-            console.log(this.classList);
+            if(this.classList.contains("week1acaslider")) {
+              updateTotalHours("week1acahours", "totalhoursacademic", "week1subtotal", "Total Academic Hours: ", "week1totalhours");
+            }
+            
           }
         }
       }
