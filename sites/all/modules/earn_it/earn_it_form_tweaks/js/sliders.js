@@ -29,7 +29,7 @@
         var hoursDivs = document.getElementsByClassName(hdivs);
         var subtotalHours = 0;
         for (var j=0; j<hoursDivs.length; j++) {
-          subtotalHours += parseInt(hoursDivs[i].innerHTML);
+          subtotalHours += parseInt(hoursDivs[j].innerHTML);
         }
         document.getElementById(stdiv).innerHTML = ststring + subtotalHours;
         var subtotalDivs = document.getElementsByClassName(stclass);
