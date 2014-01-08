@@ -55,6 +55,26 @@
               updateTotalHours("week1socialhours", "totalhourssocial", "week1subtotal", "Total Social Hours: ", "week1totalhours");
             }
             
+            else if(this.classList.contains("week2acaslider")) {
+              updateTotalHours("week2acahours", "totalhoursacademic", "week2subtotal", "Total Academic Hours: ", "week2totalhours");
+            }
+            else if (this.classList.contains("week2extraslider")) {
+              updateTotalHours("week2extrahours", "totalhoursextra", "week2subtotal", "Total Extracurricular Hours: ", "week2totalhours");
+            }
+            else if (this.classList.contains("week2socialslider")) {
+              updateTotalHours("week2socialhours", "totalhourssocial", "week2subtotal", "Total Social Hours: ", "week2totalhours");
+            }
+            
+            else if(this.classList.contains("week3acaslider")) {
+              updateTotalHours("week3acahours", "totalhoursacademic", "week3subtotal", "Total Academic Hours: ", "week3totalhours");
+            }
+            else if (this.classList.contains("week3extraslider")) {
+              updateTotalHours("week3extrahours", "totalhoursextra", "week3subtotal", "Total Extracurricular Hours: ", "week3totalhours");
+            }
+            else if (this.classList.contains("week3socialslider")) {
+              updateTotalHours("week3socialhours", "totalhourssocial", "week3subtotal", "Total Social Hours: ", "week3totalhours");
+            }
+            
           }
         }
       }
