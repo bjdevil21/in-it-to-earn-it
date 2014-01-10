@@ -1,0 +1,4 @@
+name = Earn It Login Tweaks
+description = logins by team color and game number
+core = 7.x
+package = Earn It

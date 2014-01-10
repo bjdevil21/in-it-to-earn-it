@@ -1,0 +1,1 @@
+login based on game number and team color

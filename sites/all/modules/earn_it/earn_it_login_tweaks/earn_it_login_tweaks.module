@@ -1,0 +1,182 @@
+<?php
+/**
+ * @file
+ * login based on team color and game number
+ * 
+ * @author Chandi Cumaranatunge (chandima@asu.edu)
+ */
+
+
+/*********************************************************************
+ DRUPAL HOOKS
+*********************************************************************/
+
+/**
+ * Implements hook_block_info().
+ */
+function earn_it_login_tweaks_block_info() {
+  $blocks['earn_it_login_form'] = array(
+      'info' => t('Earn It Login'),
+  );
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function earn_it_login_tweaks_block_view($delta = '') {
+  switch ($delta) {
+    case 'earn_it_login_form':
+      $block['subject'] = t('Login');
+      $block['content'] = earn_it_login_form_content();;
+      break;
+  }
+  return $block;
+}
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+  switch ($form_id) {
+    case 'user_profile_form':
+      // Check if the user is generated and remove/modify elements
+      /*if (in_array(PGI_CONFIG_GENERATED_USER_ROLE, $user->roles)) {
+        if (isset($form['account']['current_pass'])) $form['account']['current_pass']['#access'] = FALSE;
+        if (isset($form['account']['pass'])) $form['account']['pass']['#access'] = FALSE;
+        if (isset($form['account']['mail']['#description'])) {
+          $form['account']['mail']['#description'] = PGI_CONFIG_PROFILE_EMAIL_DESCRIPTION;
+        }
+      }*/
+      break;
+  }
+}
+
+
+/*********************************************************************
+ FORMS
+*********************************************************************/
+
+function earn_it_login_form($form, &$form_state) {
+  
+  $form['id_code'] = array(
+      '#type' => 'textfield',
+      '#title' => t('ID Code'),
+      '#size' => 8,
+      '#maxlength' => 8,
+      //'#required' => TRUE,
+  );
+
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Login',
+  );
+  
+  $form['generate_id_description'] = array(
+      '#type' => 'item',
+      '#title' => t('New user? Click the button below to generate a new ID.'),
+  );
+
+  $form['generate_id'] = array(
+      '#type' => 'submit',
+      '#value' => 'Generate ID',
+  );
+  
+  return $form;
+}
+
+
+/*********************************************************************
+ CALLBACKS
+*********************************************************************/
+
+/**
+ * Login form submit function
+ *   Login or register user
+ * @param array $form
+ * @param array $form_state
+ */
+function earn_it_login_form_submit($form, &$form_state) {
+  if (isset($form_state['values']['op'])) {
+    switch ($form_state['values']['op']) {
+      
+      case 'Generate ID':
+        // generate random ID code until one that doesn't match
+        // an existing username is obtained
+        do {
+            $id = rand(pow(10, PGI_CONFIG_ID_MAX_DIGITS - 1), pow(10, PGI_CONFIG_ID_MAX_DIGITS) - 1);
+        } while (pgi_login_username_exists($id));
+        // create new user (use username as password)
+        $params = array(
+            'name' => $id,
+            'pass' => $id,
+            'status' => 1,
+            'timezone' => PGI_CONFIG_GENERATED_TIMEZONE,
+        );
+        // add generated user role
+        if ($role = user_role_load_by_name(PGI_CONFIG_GENERATED_USER_ROLE)) {
+          $params['roles'] = array($role->rid => PGI_CONFIG_GENERATED_USER_ROLE);
+        }
+        global $user;
+        if ($user = user_save(null, $params)) {
+          // login user and goto edit profile page
+          drupal_session_regenerate();
+          drupal_goto('user/'.$user->uid.'/edit');
+        }
+      break;
+      
+     case 'Login':
+      //validation has already checked that this is a valid user
+       if (isset($form_state['values']['id_code']) && $form_state['values']['id_code']) {
+         global $user;
+         $user = user_load_by_name($form_state['values']['id_code']);
+         drupal_session_regenerate();
+         drupal_goto('user/'.$user->uid);
+       }
+      break;
+    }
+  }
+}
+
+
+/**
+ * PGI Login form validation
+ *   Checks if ID code valid if Login
+ * @param array $form
+ * @param array $form_state
+ */
+function earn_it_login_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['op'])) {
+    switch ($form_state['values']['op']) {
+      case 'Login':
+        if (isset($form_state['values']['id_code']) && $form_state['values']['id_code']) {
+          if (!pgi_login_username_exists($form_state['values']['id_code'])) {
+            form_set_error('id_code', t('That ID code hasn\'t been assigned to anyone.'));
+          }
+        } else {
+          form_set_error('id_code', t('ID code required to login.'));
+        }
+        break;
+      }
+   }
+}
+
+
+/*********************************************************************
+ UTILITY
+*********************************************************************/
+
+
+/**
+ * Custom ID based login form
+ * @return string
+ */
+function earn_it_login_form_content() {
+  $html = '';
+  $html .= drupal_render(drupal_get_form('earn_it_login_form'));
+  return $html;
+}
