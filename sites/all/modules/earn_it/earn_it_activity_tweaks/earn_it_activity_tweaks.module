@@ -68,16 +68,6 @@ function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
         );
 
       break;
-
-    case 'user_login':
-    
-      print "On login";
-      //$form['#submit'][] = 'earn_it_login_submit';
-      
-      break;
   }
 }
 
-function earn_it_login_submit($form, &$form_state) {
-  print "submit is trying to do its thing";
-}

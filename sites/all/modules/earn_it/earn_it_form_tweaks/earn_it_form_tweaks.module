@@ -70,7 +70,6 @@ function earn_it_form_tweaks_init() {
   if ($cpath == "node/59") { // student page
     global $user;
     $user = user_load($user->uid);
-    drupal_set_message("on page student");
     // tids 2, 4 and 6 are where they choose activities
     //drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
     $cstate = $user->field_student_state['und'][0]['tid'];
