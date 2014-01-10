@@ -69,5 +69,8 @@ function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
       break;
 
-    }
+    case 'user_login_block':
+    
+      print "On login";
+  }
 }
