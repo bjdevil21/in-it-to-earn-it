@@ -111,9 +111,9 @@ function earn_it_login_form_submit($form, &$form_state) {
       
      case 'Login':
       //validation has already checked that this is a valid user
-       if (isset($form_state['values']['id_code']) && $form_state['values']['id_code']) {
+       if (isset($form_state['values']['team_color']) && $form_state['values']['team_color'] && isset($form_state['values']['game_number']) && $form_state['values']['game_number']) {
          global $user;
-         $user = user_load_by_name($form_state['values']['id_code']);
+         $user = user_load_by_name($form_state['values']['game_number'].$form_state['values']['team_color']);
          drupal_session_regenerate();
          drupal_goto('user/'.$user->uid);
        }
