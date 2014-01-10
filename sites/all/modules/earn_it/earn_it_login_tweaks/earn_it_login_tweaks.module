@@ -45,8 +45,8 @@ function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
   switch ($form_id) {
     case 'user_profile_form':
       // Check if the user is generated and remove/modify elements
-        if (isset($form['account']['current_pass'])) $form['account']['current_pass']['#access'] = FALSE;
-        if (isset($form['account']['pass'])) $form['account']['pass']['#access'] = FALSE;
+        /*if (isset($form['account']['current_pass'])) $form['account']['current_pass']['#access'] = FALSE;
+        if (isset($form['account']['pass'])) $form['account']['pass']['#access'] = FALSE;*/
 
       break;
   }
