@@ -134,7 +134,7 @@ function earn_it_login_form_validate($form, &$form_state) {
     switch ($form_state['values']['op']) {
       case 'Login':
         if (isset($form_state['values']['team_color']) && $form_state['values']['team_color'] && isset($form_state['values']['game_number']) && $form_state['values']['game_number']) {
-
+             return true;
           }
         } else {
           form_set_error('id_code', t('Team color and game name required.'));
