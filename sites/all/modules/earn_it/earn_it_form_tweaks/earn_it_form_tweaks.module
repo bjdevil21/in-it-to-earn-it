@@ -37,8 +37,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
       drupal_set_message($cpath);
       if ($cpath == "node/add/game") {
       
-        $testUser = user_load(2);
-        dpm($testUser);
+        dsm($form);
     
         $randomSerial = rand(1000, 10000);
         // TODO: check its not a duplicate
