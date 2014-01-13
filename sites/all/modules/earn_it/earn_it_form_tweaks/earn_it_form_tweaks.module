@@ -51,7 +51,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['field_facilitator']['#disabled'] = true;
         $form['field_current_game_state']['#disabled'] = true;
         
-        hide($form['field_current_game_state']);
+        $form['field_current_game_state']['#printed'] = true;
       }
      
       break;
