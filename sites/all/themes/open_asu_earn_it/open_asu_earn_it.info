@@ -1,0 +1,8 @@
+name = Open ASU Earn It
+distribution_name = Open ASU Earn It
+description = A starting point for websites at ASU
+core = 7.x
+base theme = openasu
+exclusive = 1
+
+stylesheets[all][] = css/custom.css
