@@ -56,6 +56,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         
         $form['title']['#printed'] = true;
         $form['author']['#printed'] = true;
+        $form['author']['#title']['#printed'] = true;
         $form['additional_settings']['#printed'] = true;
         $form['revision_information']['#printed'] = true;
       }
