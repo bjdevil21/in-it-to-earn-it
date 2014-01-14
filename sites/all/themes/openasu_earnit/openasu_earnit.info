@@ -10,9 +10,7 @@ regions[content] = Content
 regions[footer] = Footer
 regions[closure] = Closure
 
-stylesheets[screen][] = css/asu.css
-stylesheets[screen][] = css/nav.css
-stylesheets[screen][] = css/custom.css
+stylesheets[all][] = css/custom.css
 
 features[] = logo
 features[] = name
