@@ -25,5 +25,5 @@
 ?>
 
 <?php 
-dpm($fields);
+    dpm("on the right page for theming");
 ?>
