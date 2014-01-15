@@ -1,3 +1,7 @@
 body {
   background-color: red;
 }
+
+.edit-submit {
+  value: "Start Game";
+}
