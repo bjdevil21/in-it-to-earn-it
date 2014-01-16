@@ -25,7 +25,7 @@
       
       var theURL = getBaseURL();
       
-      function updateTotalHours(hdivs, stdiv, stclass, ststring, tdiv) {
+      function updateTotalHours(hdivs, stdiv, stclass, ststring, tdiv, mdiv) {
         var hoursDivs = document.getElementsByClassName(hdivs);
         var subtotalHours = 0;
         for (var j=0; j<hoursDivs.length; j++) {
@@ -38,6 +38,7 @@
         totalHours += parseInt(subtotalDivs[1].innerHTML.substring(29));
         totalHours += parseInt(subtotalDivs[2].innerHTML.substring(20));
         document.getElementById(tdiv).innerHTML = "Total Hours: " + totalHours;
+        document.getElementById(mdiv).value = totalHours;
       }
       
       function addSliderEvents() {
@@ -46,33 +47,33 @@
           sliders[i].onchange = function(e) {
             document.getElementById('hourschosen' + parseInt(this.id.substring(11))).innerHTML = this.value;
             if(this.classList.contains("week1acaslider")) {
-              updateTotalHours("week1acahours", "totalhoursacademic", "week1subtotal", "Total Academic Hours: ", "week1totalhours");
+              updateTotalHours("week1acahours", "totalhoursacademic", "week1subtotal", "Total Academic Hours: ", "week1totalhours", "studentmeterweek1");
             }
             else if (this.classList.contains("week1extraslider")) {
-              updateTotalHours("week1extrahours", "totalhoursextra", "week1subtotal", "Total Extracurricular Hours: ", "week1totalhours");
+              updateTotalHours("week1extrahours", "totalhoursextra", "week1subtotal", "Total Extracurricular Hours: ", "week1totalhours", "studentmeterweek1");
             }
             else if (this.classList.contains("week1socialslider")) {
-              updateTotalHours("week1socialhours", "totalhourssocial", "week1subtotal", "Total Social Hours: ", "week1totalhours");
+              updateTotalHours("week1socialhours", "totalhourssocial", "week1subtotal", "Total Social Hours: ", "week1totalhours", "studentmeterweek1");
             }
             
             else if(this.classList.contains("week2acaslider")) {
-              updateTotalHours("week2acahours", "totalhoursacademic", "week2subtotal", "Total Academic Hours: ", "week2totalhours");
+              updateTotalHours("week2acahours", "totalhoursacademic", "week2subtotal", "Total Academic Hours: ", "week2totalhours", "studentmeterweek2");
             }
             else if (this.classList.contains("week2extraslider")) {
-              updateTotalHours("week2extrahours", "totalhoursextra", "week2subtotal", "Total Extracurricular Hours: ", "week2totalhours");
+              updateTotalHours("week2extrahours", "totalhoursextra", "week2subtotal", "Total Extracurricular Hours: ", "week2totalhours", "studentmeterweek2");
             }
             else if (this.classList.contains("week2socialslider")) {
-              updateTotalHours("week2socialhours", "totalhourssocial", "week2subtotal", "Total Social Hours: ", "week2totalhours");
+              updateTotalHours("week2socialhours", "totalhourssocial", "week2subtotal", "Total Social Hours: ", "week2totalhours", "studentmeterweek2");
             }
             
             else if(this.classList.contains("week3acaslider")) {
-              updateTotalHours("week3acahours", "totalhoursacademic", "week3subtotal", "Total Academic Hours: ", "week3totalhours");
+              updateTotalHours("week3acahours", "totalhoursacademic", "week3subtotal", "Total Academic Hours: ", "week3totalhours", "studentmeterweek3");
             }
             else if (this.classList.contains("week3extraslider")) {
-              updateTotalHours("week3extrahours", "totalhoursextra", "week3subtotal", "Total Extracurricular Hours: ", "week3totalhours");
+              updateTotalHours("week3extrahours", "totalhoursextra", "week3subtotal", "Total Extracurricular Hours: ", "week3totalhours", "studentmeterweek3");
             }
             else if (this.classList.contains("week3socialslider")) {
-              updateTotalHours("week3socialhours", "totalhourssocial", "week3subtotal", "Total Social Hours: ", "week3totalhours");
+              updateTotalHours("week3socialhours", "totalhourssocial", "week3subtotal", "Total Social Hours: ", "week3totalhours", "studentmeterweek3");
             }
             
           }
