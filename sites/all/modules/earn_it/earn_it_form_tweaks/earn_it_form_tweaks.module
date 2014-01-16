@@ -60,7 +60,7 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['additional_settings']['#printed'] = true;
         $form['revision_information']['#printed'] = true;
         
-        drupal_add_js('jQuery(document).ready(function () { document.getElementById("edit-submit").value = "Start Game" });', 'inline');
+        drupal_add_js('jQuery(document).ready(function () { document.getElementById("edit-submit").value = "Start Game"; document.getElementsByClassName("pane-node-form-menu")[0].style.display="none"; document.getElementsByClassName("pane-node-form-publishing")[0].style.display="none"; document.getElementsByClassName("pane-node-form-author")[0].style.display="none"; document.getElementById("edit-draft").style.display="none"; document.getElementById("edit-preview").style.display="none"; document.getElementsByClassName("form-item-path-alias")[0].style.display="none"; });', 'inline');
         
         
       }
