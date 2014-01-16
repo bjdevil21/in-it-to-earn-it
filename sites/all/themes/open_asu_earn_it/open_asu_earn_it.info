@@ -1,7 +1,0 @@
-name = Open ASU Earn It
-distribution_name = Open ASU Earn It
-description = Custom theme for In It To Earn It
-core = 7.x
-base theme = openasu_bootstrap
-
-stylesheets[all][] = css/custom.css
