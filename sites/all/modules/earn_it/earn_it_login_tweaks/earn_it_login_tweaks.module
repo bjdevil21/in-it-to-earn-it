@@ -66,7 +66,7 @@ function earn_it_login_form($form, &$form_state) {
   }
   $form['team_color'] = array(
     '#type' => 'select',
-    '#title' => t('Select the term'),
+    '#title' => t('Team Color'),
     '#options' => drupal_map_assoc(array('Maroon', 'Gold', 'Gray', 'Orange', 'Blue')),
     '#required' => TRUE,
   );
