@@ -59,13 +59,15 @@ function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
 function earn_it_login_form($form, &$form_state) {
   
-  $form['team_color'] = array(
+  /*$form['team_color'] = array(
       '#type' => 'textfield',
       '#title' => t('Team Color'),
       '#size' => 8,
       '#maxlength' => 8,
       //'#required' => TRUE,
-  );
+  );*/
+  
+  $form['team_color'] = taxonomy_form(5);
   
   $form['game_number'] = array(
       '#type' => 'textfield',
