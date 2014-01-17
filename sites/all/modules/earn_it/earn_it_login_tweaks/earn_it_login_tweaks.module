@@ -67,7 +67,17 @@ function earn_it_login_form($form, &$form_state) {
       //'#required' => TRUE,
   );*/
   
-  $form['team_color'] = taxonomy_form(5);
+  $terms = taxonomy_get_tree(5);
+  $terms_select = array();
+  foreach ($terms as $term) {
+   $terms_select[$term->tid] = str_repeat('-', $term->depth) . $term->name;
+  }
+  $form['team_color'] = array(
+    '#type' => 'select',
+    '#title' => t('Select the term'),
+    '#options' => $terms_select,
+    '#required' => TRUE,
+  );
   
   $form['game_number'] = array(
       '#type' => 'textfield',
