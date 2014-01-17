@@ -75,7 +75,7 @@ function earn_it_login_form($form, &$form_state) {
   $form['team_color'] = array(
     '#type' => 'select',
     '#title' => t('Select the term'),
-    '#options' => $terms_select,
+    '#options' => array('Maroon', 'Gold'),
     '#required' => TRUE,
   );
   
@@ -90,11 +90,6 @@ function earn_it_login_form($form, &$form_state) {
   $form['submit'] = array(
       '#type' => 'submit',
       '#value' => 'Login',
-  );
-  
-  $form['generate_id_description'] = array(
-      '#type' => 'item',
-      '#title' => t('New user? Click the button below to generate a new ID.'),
   );
 
   
@@ -123,7 +118,7 @@ function earn_it_login_form_submit($form, &$form_state) {
          global $user;
          $user = user_load_by_name($form_state['values']['game_number'].$form_state['values']['team_color']);
          drupal_session_regenerate();
-         drupal_goto('user/'.$user->uid);
+         drupal_goto('student');
        }
       break;
     }
