@@ -84,6 +84,7 @@
       
       
       //window.onload=addSliderEvents();
+      alert("at least sliders loaded");
     }
   };
 })(jQuery);
