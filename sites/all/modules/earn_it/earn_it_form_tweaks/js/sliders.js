@@ -38,8 +38,8 @@
         totalHours += parseInt(subtotalDivs[1].innerHTML.substring(29));
         totalHours += parseInt(subtotalDivs[2].innerHTML.substring(20));
         document.getElementById(tdiv).innerHTML = "Total Hours: " + totalHours;
-        var pbarVal = totalHours * 2;
-        document.getElementsByClassName("ui-progressbar-value")[0].style.width = pbarVal + "%";
+        //var pbarVal = totalHours * 2;
+        //document.getElementsByClassName("ui-progressbar-value")[0].style.width = pbarVal + "%";
       }
       
       function addSliderEvents() {
