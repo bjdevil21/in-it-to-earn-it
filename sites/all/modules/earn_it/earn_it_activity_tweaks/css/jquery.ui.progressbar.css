@@ -11,4 +11,4 @@
 .ui-progressbar { margin: -1px; height:100%; }
 .ui-progressbar { border: 1px solid #aaaaaa; color: #222222; }
 
-.ui-progressbar-value { height:100%; }
+.ui-progressbar-value { height:100%; padding-top:0px; padding-bottom:0px; padding-left:0px; padding-right:0px; }
