@@ -43,6 +43,7 @@
       }
       
       function addSliderEvents() {
+        alert("Add slider events called");
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
           sliders[i].onchange = function(e) {
