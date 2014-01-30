@@ -82,7 +82,7 @@
       }
       
       
-      window.onload=addSliderEvents();
+      addSliderEvents();
     }
   };
 })(jQuery);
