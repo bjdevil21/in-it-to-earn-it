@@ -4,7 +4,7 @@
 
         $(function() {
           $( "#progressbar" ).progressbar({
-            value: 37
+            value: 0
           });
         });
       
