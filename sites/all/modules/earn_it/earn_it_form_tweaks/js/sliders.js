@@ -43,7 +43,12 @@
       }
       
       function addSliderEvents() {
-        alert("add slider events called");
+      
+        $( "#progressbar" ).progressbar({
+            value: 0
+          });
+      
+        //alert("add slider events called");
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
           sliders[i].onchange = function(e) {
