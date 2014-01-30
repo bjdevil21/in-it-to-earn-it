@@ -87,7 +87,7 @@ function earn_it_form_tweaks_init() {
     //drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
     $cstate = $user->field_student_state['und'][0]['tid'];
     if ($cstate == 2 || $cstate == 4 || $cstate == 6) {
-      drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/sliders.js');
+      //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/sliders.js');
     }
     //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
   }
