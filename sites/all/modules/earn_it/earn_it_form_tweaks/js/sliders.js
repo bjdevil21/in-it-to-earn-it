@@ -42,7 +42,7 @@
         //document.getElementsByClassName("ui-progressbar-value")[0].style.width = pbarVal + "%";
       }
       
-      function addSliderEvents() {
+      /*function addSliderEvents() {
         alert("add slider events called");
         var sliders = document.getElementsByClassName('hoursslider');
         for(var i=0; i<sliders.length; i++) { 
@@ -80,10 +80,10 @@
             
           }
         }
-      }
+      }*/
       
       
-      window.onload=addSliderEvents();
+      //window.onload=addSliderEvents();
     }
   };
 })(jQuery);
