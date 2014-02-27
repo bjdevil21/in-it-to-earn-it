@@ -272,7 +272,7 @@ function update_facil_progress_php_function($arg1, $arg2) {
   node_save($cnode);
 }
 
-function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours
+function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours, money
 
   // create and save the response node
   $cuser = user_load($arg2);
@@ -283,19 +283,8 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
     'comment' => 0,
     'promote' => 0,
   );
-  $entity = entity_create('node', $values);
-  $ewrapper = entity_metadata_wrapper('node', $entity);
-  $ewrapper->title->set($cuser->name . $arg1);
-
-  $ewrapper->field_selected_activity->set(intval($arg1));
-  $ewrapper->field_selecting_user->set(intval($arg2));
-  $ewrapper->field_selected_hours->set(intval($arg3));
-  $ewrapper->save();
+  $cscholarship= 0;
   
-  // add scholarship money to the user
-  $cnode = node_load($arg1);
-  $cscholarship = $cuser->field_scholarship_money['und'][0]['value'];
-
   if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
     $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
   }
@@ -303,8 +292,19 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
     $cscholarship += ($cnode->field_scholarship_per_hour['und'][0]['value'] * $arg3);
   }
 
+  $entity = entity_create('node', $values);
+  $ewrapper = entity_metadata_wrapper('node', $entity);
+  $ewrapper->title->set($cuser->name . $arg1);
 
-
+  $ewrapper->field_selected_activity->set(intval($arg1));
+  $ewrapper->field_selecting_user->set(intval($arg2));
+  $ewrapper->field_selected_hours->set(intval($arg3));
+  $ewrapper->field_selected_money->set(intval($cscholarship));
+  $ewrapper->save();
+  
+  // add scholarship money to the user
+  $cnode = node_load($arg1);
+  $cscholarship2 = $cuser->field_scholarship_money['und'][0]['value'] + $cscholarship;
 
   
   // FIXME: also save ACT and GPA
@@ -312,7 +312,7 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
     'field_scholarship_money' => array(
         'und' => array(
           0 => array(
-            "value" => $cscholarship))),
+            "value" => $cscholarship2))),
   );
   user_save($cuser, $edit);
 }
