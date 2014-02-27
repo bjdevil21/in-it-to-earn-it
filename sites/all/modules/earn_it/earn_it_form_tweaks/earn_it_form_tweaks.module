@@ -285,6 +285,7 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   );
   $cscholarship= 0;
   
+  $cnode = node_load($arg1);
   if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
     $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
   }
@@ -303,7 +304,6 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   $ewrapper->save();
   
   // add scholarship money to the user
-  $cnode = node_load($arg1);
   $cscholarship2 = $cuser->field_scholarship_money['und'][0]['value'] + $cscholarship;
 
   
