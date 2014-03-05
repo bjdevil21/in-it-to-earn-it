@@ -352,7 +352,7 @@ function delete_student_user_php_function ($arg1) { // uid
   $cuser = user_load($arg1);
   
   
-  if (!in_array('Facilitator', $cuser->roles) { // not a facilitator
+  if (!in_array('Facilitator', $cuser->roles)) { // not a facilitator
     $cnid = $cuser->field_playing_game['und'][0]['target_id'];
     $cnode = node_load($cnid);
     $cnode -> field_number_of_players['und'][0]['value']--;
