@@ -148,10 +148,19 @@ function earn_it_form_tweaks_menu() {
   );
   
   $items['update_student_gpa_act/%'] = array(
-    'title' => 'mosify student GPA and ACT score', 
+    'title' => 'modify student GPA and ACT score', 
     'description' => 'Callback for updating GPA and ACT.', 
     'page callback' => 'update_student_gpa_act_php_function', 
     'page arguments' => array(1, 2, 3),
+    'access arguments' => array('access content'), 
+    'type' => MENU_CALLBACK,
+  );
+  
+  $items['delete_student_user/%'] = array(
+    'title' => 'delete a user after verifying they are a student', 
+    'description' => 'Callback for verifying student and deleting them.', 
+    'page callback' => 'delete_student_user_php_function', 
+    'page arguments' => array(1),
     'access arguments' => array('access content'), 
     'type' => MENU_CALLBACK,
   );
@@ -333,4 +342,30 @@ function update_student_gpa_act_php_function ($arg1, $arg2, $arg3) {
 
   );
   user_save($cuser, $edit);
+}
+
+function delete_student_user_php_function ($arg1) { // uid
+  // verify the uid belongs to a student
+  // edit the game to no longer have that many students
+  // delete the student
+
+  $cuser = user_load($arg1);
+  
+  
+  if (!in_array('Facilitator', $cuser->roles) { // not a facilitator
+    $cnid = $cuser->field_playing_game['und'][0]['target_id'];
+    $cnode = node_load($cnid);
+    $cnode -> field_number_of_players['und'][0]['value']--;
+    if ($cnode -> field_number_of_players['und'][0]['value'] < 0)
+      $cnode -> field_number_of_players['und'][0]['value'] = 0;
+    node_save($cnode);
+
+    $edit = array(
+      'field_playing_game' => array(
+        'und' => array(
+          0 => array(
+            "target_id" => 0)))
+    );
+    user_save($cuser, $edit);
+  }
 }
