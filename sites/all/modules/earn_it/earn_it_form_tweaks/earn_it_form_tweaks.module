@@ -380,5 +380,21 @@ function delete_student_user_php_function ($arg1) { // uid
 }
 
 function reset_game_php_function ($arg1) { // nid of the game to reset
-  print("reset game callback hit");
+
+  $result = db_query('SELECT f.entity_id FROM field_data_field_playing_game f WHERE f.field_playing_game_target_id = :nid', array(':nid' => $arg1));
+
+  foreach ($result as $record) {
+    $cuser = user_load($record->entity_id);
+    $edit = array(
+      'field_student_state' => array(
+        'und' => array(
+          0 => array(
+            "tid" => 1)))
+    );
+    user_save($cuser, $edit);
+  }
+  
+  $cnode = node_load($arg1);
+  $cnode -> field_current_game_state['und'][0]['tid'] = 1;
+  node_save($cnode);
 }
