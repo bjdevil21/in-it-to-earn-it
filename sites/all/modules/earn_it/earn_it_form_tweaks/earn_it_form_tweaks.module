@@ -164,6 +164,15 @@ function earn_it_form_tweaks_menu() {
     'access arguments' => array('access content'), 
     'type' => MENU_CALLBACK,
   );
+  
+  $items['reset_game/%'] = array(
+    'title' => 'set a game and its users back to the start', 
+    'description' => 'reset a game.', 
+    'page callback' => 'reset_game_php_function', 
+    'page arguments' => array(1),
+    'access arguments' => array('access content'), 
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
@@ -368,4 +377,8 @@ function delete_student_user_php_function ($arg1) { // uid
     );
     user_save($cuser, $edit);
   }
+}
+
+function reset_game_php_function ($arg1) { // nid of the game to reset
+  print("reset game callback hit");
 }
