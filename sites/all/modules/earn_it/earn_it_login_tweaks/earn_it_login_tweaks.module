@@ -51,7 +51,9 @@ function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
       break;
     case 'user_login_form':
       $form['name']['#access'] = FALSE;
-      
+      $form['title']['#printed'] = true;
+      $form['name']['#printed'] = true;
+
       break;
   }
 }
