@@ -42,13 +42,34 @@ function earn_it_login_tweaks_block_view($delta = '') {
  */
 function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
   global $user;
+  //dpm($form_id);
   switch ($form_id) {
-    case 'user_profile_form':
-      // Check if the user is generated and remove/modify elements
-        $form['account']['current_pass']['#access'] = FALSE;
-        $form['account']['pass']['#access'] = FALSE;
+    case 'user_login':
+      
+      // add fieldset
+      $form['default_login'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Default Login'),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+          '#tree' => TRUE,
+      );
+      
+      // move default login elements inside fieldset
+      $form['default_login']['name'] = $form['name'];
+      $form['default_login']['pass'] = $form['pass'];
+      $form['default_login']['actions'] = $form['actions'];
+      
+      // disable access to default login elements
+      $form['name']['#access'] = FALSE;
+      $form['pass']['#access'] = FALSE;
+      $form['actions']['#access'] = FALSE;
+      
+      // add new validation function at the head of the validation chain
+      array_unshift($form['#validate'] , 'earn_it_login_form_pre_validation_actions');
 
       break;
+      
     case 'user_login_form':
       $form['name']['#access'] = FALSE;
       $form['title']['#printed'] = true;
@@ -123,6 +144,20 @@ function earn_it_login_form_submit($form, &$form_state) {
   }
 }
 
+/**
+ * First validation function in the user login
+ *   form validation chain. Does some housekeeping
+ *   to restore values into the default login form fields.
+ * @param array $form
+ * @param array $form_state
+ */
+function earn_it_login_form_pre_validation_actions($form, &$form_state) {
+  // copy values from inside fieldset to required login fields
+  if (isset($form_state['values'])) {
+    $form_state['values']['name'] = $form_state['values']['default_login']['name'];
+    $form_state['values']['pass'] = $form_state['values']['default_login']['pass'];
+  }
+}
 
 /**
  * PGI Login form validation
