@@ -39,7 +39,15 @@
         totalHours += parseInt(subtotalDivs[2].innerHTML.substring(20));
         document.getElementById(tdiv).innerHTML = "Total Hours: " + totalHours;
         var pbarVal = totalHours * 2;
-        document.getElementsByClassName("ui-progressbar-value")[0].style.width = pbarVal + "%";
+		var pbarColor = '#666';
+        if (pbarVal == 100)
+          pbarColor = 'green';
+        else if (pbarVal > 100) {
+          pbarColor = 'red';
+          pbarVal = 100;
+        }
+        document.getElementsByClassName('ui-progressbar-value')[0].style.width = pbarVal + '%';
+        document.getElementsByClassName('ui-progressbar-value')[0].style.background = pbarColor;
       }
       
       function addSliderEvents() {
