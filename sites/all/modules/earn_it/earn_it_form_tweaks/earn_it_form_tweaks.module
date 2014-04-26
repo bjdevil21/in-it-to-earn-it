@@ -386,6 +386,18 @@ function reset_game_php_function ($arg1) { // nid of the game to reset
   foreach ($result as $record) {
     $cuser = user_load($record->entity_id);
     $edit = array(
+	  'field_gpa' => array(
+        'und' => array(
+          0 => array(
+            "value" => 0))),
+      'field_act_score' => array(
+        'und' => array(
+          0 => array(
+            "value" => 22))),
+      'field_scholarship_money' => array(
+        'und' => array(
+          0 => array(
+            "value" => 0))),
       'field_student_state' => array(
         'und' => array(
           0 => array(
