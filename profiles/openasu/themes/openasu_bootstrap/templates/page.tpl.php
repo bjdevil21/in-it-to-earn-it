@@ -76,6 +76,10 @@
  *
  * @ingroup themeable
  */
+
+dpm(get_defined_vars(), 'gdv');
+dpm($page, 'user');
+
 ?>
 <div id="page-wrapper">
   <div id="page">

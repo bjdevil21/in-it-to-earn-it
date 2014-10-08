@@ -50,6 +50,8 @@ function openasu_bootstrap_ctools_plugin_post_alter(&$plugin, &$info) {
  * Implements template_process_page().
  */
 function openasu_bootstrap_preprocess_page(&$variables) {
+  global $user;
+  $variables['uv'] = $user;
   $variables['asu_picture'] = '';
   $variables['asu_local_navicon'] = '';
 
