@@ -77,8 +77,6 @@
  * @ingroup themeable
  */
 
-dpm($variables['user'], 'variables - user');
-
 ?>
 <div id="page-wrapper">
   <div id="page">

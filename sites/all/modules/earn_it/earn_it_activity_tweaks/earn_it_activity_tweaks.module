@@ -27,9 +27,9 @@
 function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
   global $user;
-  if ($user->uid ==1)
-    dpm($form);
-
+  if ($user->name == 'aubjr') {
+    dpm($form, 'earn it activity tweaks form alter');
+  }
   switch($form_id) {
 
     case 'activity_node_form':
@@ -53,7 +53,7 @@ function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
           ':input[id=edit-field-variable-time-und]' => array('checked' => TRUE),
           ),
         );
-        
+
       $form['field_hours']['#states'] = array(
         // Only show this field when the 'field_variable_time' checkbox is disabled.
         'visible' => array(
@@ -66,7 +66,6 @@ function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
           ':input[id=edit-field-variable-time-und]' => array('checked' => FALSE),
           ),
         );
-
       break;
   }
 }
