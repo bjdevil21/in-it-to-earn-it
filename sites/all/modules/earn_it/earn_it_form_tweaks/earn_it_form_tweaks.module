@@ -80,6 +80,19 @@ function earn_it_form_tweaks_node_insert($node) {
 function earn_it_form_tweaks_init() {
   //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
   $cpath = current_path();
+  // INIT-35 possible fix
+  if ($cpath = "node/58") {
+    drupal_add_html_head(
+      array(
+        '#tag' => 'meta',
+        '#attributes' => array(
+          'http-equiv' =>"Refresh",
+          'content' => '600',
+          ),
+        ),
+      'meta-refresh-init-35'
+    );
+  // END INIT-35
   if ($cpath == "node/59") { // student page
     global $user;
     if ($user->uid == 0) {
