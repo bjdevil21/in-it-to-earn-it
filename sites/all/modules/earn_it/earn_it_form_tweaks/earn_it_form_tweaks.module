@@ -87,7 +87,7 @@ function earn_it_form_tweaks_init() {
         '#tag' => 'meta',
         '#attributes' => array(
           'http-equiv' =>"Refresh",
-          'content' => '600',
+          'content' => '300',
           ),
         ),
       'meta-refresh-init-35'
