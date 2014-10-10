@@ -92,6 +92,7 @@ function earn_it_form_tweaks_init() {
         ),
       'meta-refresh-init-35'
     );
+  }
   // END INIT-35
   if ($cpath == "node/59") { // student page
     global $user;
