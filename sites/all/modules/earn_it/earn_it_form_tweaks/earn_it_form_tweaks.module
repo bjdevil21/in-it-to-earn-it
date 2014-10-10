@@ -81,10 +81,7 @@ function earn_it_form_tweaks_init() {
   //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
   $cpath = current_path();
   // INIT-35 possible fix
-  global $user;
-  dpm($user, 'user - init');
-  dpm($cpath, 'cpath');
-  if ($cpath = "node/58") {
+  if ($cpath == "node/58") {
     drupal_add_html_head(
       array(
         '#tag' => 'meta',
@@ -98,6 +95,7 @@ function earn_it_form_tweaks_init() {
   }
   // END INIT-35
   if ($cpath == "node/59") { // student page
+    global $user;
     if ($user->uid == 0) {
       drupal_set_message('You are not properly logged in. It may be because you selected a color that was not available for a particular game. Please try again.', 'error');
       drupal_goto("user/login");
