@@ -2,7 +2,7 @@
 /**
  * @file
  * login based on team color and game number
- * 
+ *
  * @author Chandi Cumaranatunge (chandima@asu.edu)
  */
 
@@ -30,7 +30,7 @@ function earn_it_login_tweaks_block_view($delta = '') {
   switch ($delta) {
     case 'earn_it_login_form':
       $block['subject'] = t('Login');
-      $block['content'] = earn_it_login_form_content();;
+      $block['content'] = earn_it_login_form_content();
       break;
   }
   return $block;
@@ -41,11 +41,10 @@ function earn_it_login_tweaks_block_view($delta = '') {
  * Implements hook_form_alter().
  */
 function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
-  global $user;
-  //dpm($form_id);
+
   switch ($form_id) {
     case 'user_login':
-      
+
       // add fieldset
       $form['default_login'] = array(
           '#type' => 'fieldset',
@@ -54,22 +53,22 @@ function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
           '#collapsed' => TRUE,
           '#tree' => TRUE,
       );
-      
+
       // move default login elements inside fieldset
       $form['default_login']['name'] = $form['name'];
       $form['default_login']['pass'] = $form['pass'];
       $form['default_login']['actions'] = $form['actions'];
-      
+
       // disable access to default login elements
       $form['name']['#access'] = FALSE;
       $form['pass']['#access'] = FALSE;
       $form['actions']['#access'] = FALSE;
-      
+
       // add new validation function at the head of the validation chain
       array_unshift($form['#validate'] , 'earn_it_login_form_pre_validation_actions');
 
       break;
-      
+
     case 'user_login_form':
       $form['name']['#access'] = FALSE;
       $form['title']['#printed'] = true;
@@ -85,66 +84,54 @@ function earn_it_login_tweaks_form_alter(&$form, &$form_state, $form_id) {
 *********************************************************************/
 
 function earn_it_login_form($form, &$form_state) {
-  
-  $terms = taxonomy_get_tree(5);
+  // get legitimate game numbers, sorting latest at the top
+    $query = db_select('field_data_field_serial_number', 'sn');
+    $query->join('node', 'n', 'sn.entity_id = n.nid');
+    $query->join('field_data_field_current_game_state', 'cgs', 'sn.entity_id = cgs.entity_id');
+    $query->fields('sn',array('field_serial_number_value'))
+      ->condition('n.status', '1','=')
+      ->condition('cgs.field_current_game_state_tid', '1','=')
+      ->orderBy('n.changed', 'DESC');
+    //dpm((string) $query, 'query text');
+    $game_result = $query->execute()->fetchAllKeyed(0,0);
+  $form['game_number'] = array(
+      '#type' => 'select',
+      '#title' => t('Available Game Numbers'),
+      '#options' => $game_result,
+      '#required' => TRUE,
+  );
+  // Now get legitimate team colors from taxonomy vocab (none of this hard-coded garbage)
+  // TODO - IDEAL ideal 4) only output available remaining colors - would need
+  //          to alter the output of the form above.
+
+  $terms = taxonomy_get_tree(5); // Color
   $terms_select = array();
   foreach ($terms as $term) {
-   $terms_select[$term->tid] = str_repeat('-', $term->depth) . $term->name;
+    $tmp_term = (string)$term->name;
+    $terms_select[$tmp_term] = $tmp_term;
   }
   $form['team_color'] = array(
-    '#type' => 'select',
-    '#title' => t('Team Color'),
-    '#options' => drupal_map_assoc(array('Maroon', 'Gold', 'Gray', 'Orange', 'Blue')),
-    '#required' => TRUE,
+      '#type' => 'select',
+      '#title' => t('Team Color'),
+      '#options' => $terms_select,
+      '#required' => TRUE,
   );
-  
-  $form['game_number'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Game Number'),
-      '#size' => 8,
-      '#maxlength' => 8,
-      //'#required' => TRUE,
-  );
-
+  $form['#validate'][] = 'earn_it_login_form_validate';
   $form['submit'] = array(
       '#type' => 'submit',
       '#value' => 'Login',
   );
-
-  
   return $form;
 }
-
 
 /*********************************************************************
  CALLBACKS
 *********************************************************************/
 
-/**
- * Login form submit function
- *   Login or register user
- * @param array $form
- * @param array $form_state
- */
-function earn_it_login_form_submit($form, &$form_state) {
-  if (isset($form_state['values']['op'])) {
-    switch ($form_state['values']['op']) {
-      
-      
-     case 'Login':
-      //validation has already checked that this is a valid user
-       if (isset($form_state['values']['team_color']) && $form_state['values']['team_color'] && isset($form_state['values']['game_number']) && $form_state['values']['game_number']) {
-         global $user;
-         $user = user_load_by_name($form_state['values']['game_number'].$form_state['values']['team_color']);
-         drupal_session_regenerate();
-         drupal_goto('student');
-       }
-      break;
-    }
-  }
-}
 
 /**
+ * Implements hook_form_validate();
+ *
  * First validation function in the user login
  *   form validation chain. Does some housekeeping
  *   to restore values into the default login form fields.
@@ -160,6 +147,8 @@ function earn_it_login_form_pre_validation_actions($form, &$form_state) {
 }
 
 /**
+ * Implements hook_form_validate();
+ *
  * PGI Login form validation
  *   Checks if ID code valid if Login
  * @param array $form
@@ -169,16 +158,69 @@ function earn_it_login_form_validate($form, &$form_state) {
   if (isset($form_state['values']['op'])) {
     switch ($form_state['values']['op']) {
       case 'Login':
-        if (isset($form_state['values']['team_color']) && $form_state['values']['team_color'] && isset($form_state['values']['game_number']) && $form_state['values']['game_number']) {
-             return true;
-        } else {
-          form_set_error('id_code', t('Team color and game number required.'));
+        // Validate that team color is legitimate color, based on game number and no. of players
+        $query = db_select('field_data_field_number_of_players', 'nop');
+        $query->join('field_data_field_serial_number', 'sn', 'nop.entity_id = sn.entity_id');
+        $query->fields('nop',array('field_number_of_players_value'))
+          ->condition('sn.field_serial_number_value', $form_state['values']['game_number'],'=');
+        $nop = $query->execute()->fetchAssoc();
+        // Get selected color
+        $color = (!empty($form_state['values']['team_color'])) ? $form_state['values']['team_color'] : 'none';
+        // Get terms
+        $t = taxonomy_get_tree(5); // Color
+        $terms = array();
+        $terms_count = 1;
+        foreach ($t as $term) {
+          $tmp_term = (string)$term->name;
+          $terms[$terms_count] = $tmp_term;
+          $terms_count++;
+        }
+        foreach ($terms as $k=>$v) {
+          if ($v == $color && $k > $nop) { // when color matches, is the number too high?
+            form_set_error('id_code', t('Team color not available for game.'));
+          }
+          // TODO - ideal 3) validate color hasn't already been selected by other players
+          // TODO - IDEAL ideal 4) only output available remaining colors - would need
+          //          to alter the output of the form above.
+          elseif (!isset($form_state['values']['team_color']) ||
+              empty($form_state['values']['team_color']) ||
+              !isset($form_state['values']['game_number']) ||
+              empty($form_state['values']['game_number'])) {
+            form_set_error('id_code', t('Team color and game number required.'));
+          }
+          else {
+            return true;
+          }
         }
         break;
-      }
-   }
+    }
+  }
 }
 
+/**
+ * IMplements hook_form_submit();
+ *
+ * Login form submit function
+ *   Login or register user
+ * @param array $form
+ * @param array $form_state
+ */
+function earn_it_login_form_submit($form, &$form_state) {
+  //dpm($form_state, "form_state - hook_form_submit");
+  if (isset($form_state['values']['op'])) {
+    switch ($form_state['values']['op']) {
+     case 'Login':
+      //validation has already checked that this is a valid user
+       if (isset($form_state['values']['team_color']) && $form_state['values']['team_color'] && isset($form_state['values']['game_number']) && $form_state['values']['game_number']) {
+         global $user;
+         $user = user_load_by_name($form_state['values']['game_number'].$form_state['values']['team_color']);
+         drupal_session_regenerate();
+         drupal_goto('student');
+       }
+      break;
+    }
+  }
+}
 
 /*********************************************************************
  UTILITY

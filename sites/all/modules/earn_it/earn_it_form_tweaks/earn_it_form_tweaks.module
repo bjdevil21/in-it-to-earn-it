@@ -29,19 +29,19 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
   switch($form_id) {
 
     case 'game_node_form':
-    
+
       global $user;
       $account = $user;
-      
+
       $cpath = current_path();
       //drupal_set_message($cpath);
       if ($cpath == "node/add/game") {
-      
+
         //dsm($form);
-    
+
         $randomSerial = rand(1000, 10000);
         // TODO: check its not a duplicate
-      
+
         $form['title']['#default_value'] = "game" . $randomSerial;
 
         $form['field_serial_number']['und'][0]['value']['#default_value'] = $randomSerial;
@@ -49,22 +49,22 @@ function earn_it_form_tweaks_form_alter(&$form, &$form_state, $form_id) {
         $form['field_facilitator']['und']['#default_value'] = $account->uid;
         $form['field_facilitator']['#disabled'] = true;
         $form['field_current_game_state']['#disabled'] = true;
-        
+
         $form['field_serial_number']['#printed'] = true;
         $form['field_facilitator']['#printed'] = true;
         $form['field_current_game_state']['#printed'] = true;
-        
+
         $form['title']['#printed'] = true;
         $form['author']['#printed'] = true;
         $form['author']['#title']['#printed'] = true;
         $form['additional_settings']['#printed'] = true;
         $form['revision_information']['#printed'] = true;
-        
+
         drupal_add_js('jQuery(document).ready(function () { document.getElementById("edit-submit").value = "Start Game"; document.getElementsByClassName("pane-node-form-menu")[0].style.display="none"; document.getElementsByClassName("pane-node-form-publishing")[0].style.display="none"; document.getElementsByClassName("pane-node-form-author")[0].style.display="none"; document.getElementById("edit-draft").style.display="none"; document.getElementById("edit-preview").style.display="none"; document.getElementsByClassName("form-item-path-alias")[0].style.display="none"; });', 'inline');
-        
-        
+
+
       }
-     
+
       break;
 
     }
@@ -82,14 +82,20 @@ function earn_it_form_tweaks_init() {
   $cpath = current_path();
   if ($cpath == "node/59") { // student page
     global $user;
-    $user = user_load($user->uid);
+    if ($user->uid == 0) {
+      drupal_set_message('You are not properly logged in. It may be because you selected a color that was not available for a particular game. Please try again.', 'error');
+      drupal_goto("user/login");
+    }
+    //$user = user_load($user->uid);
     // tids 2, 4 and 6 are where they choose activities
     //drupal_add_js(array('earnituid' => array('key' => $user->uid)), 'setting');
+    /*
     $cstate = $user->field_student_state['und'][0]['tid'];
     if ($cstate == 2 || $cstate == 4 || $cstate == 6) {
       //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/sliders.js');
     }
-    //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js'); 
+    */
+    //drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue.js');
   }
   /*else if ($cpath == "node/58") { // facilitator page
     global $user;
@@ -101,7 +107,7 @@ function earn_it_form_tweaks_init() {
       $gnid = $record -> field_playing_game_target_id;
     }
     $cgame = node_load($gnid);
-    
+
     drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
 
     $cstate = $cgame->field_current_game_state['und'][0]['tid'];
@@ -121,56 +127,56 @@ function earn_it_form_tweaks_menu() {
   $items = array();
 
   $items['user_progress/%'] = array(
-    'title' => 'Update student progress', 
-    'description' => 'Callback for updating student progress.', 
-    'page callback' => 'update_student_progress_php_function', 
+    'title' => 'Update student progress',
+    'description' => 'Callback for updating student progress.',
+    'page callback' => 'update_student_progress_php_function',
     'page arguments' => array(1, 2),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  
+
   $items['facil_progress/%'] = array(
-    'title' => 'Update facilitator progress', 
-    'description' => 'Callback for updating facilitator progress.', 
-    'page callback' => 'update_facil_progress_php_function', 
+    'title' => 'Update facilitator progress',
+    'description' => 'Callback for updating facilitator progress.',
+    'page callback' => 'update_facil_progress_php_function',
     'page arguments' => array(1, 2),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  
+
   $items['create_response/%'] = array(
-    'title' => 'Create a response to an activity', 
-    'description' => 'Callback for creating a response node.', 
-    'page callback' => 'create_response_php_function', 
+    'title' => 'Create a response to an activity',
+    'description' => 'Callback for creating a response node.',
+    'page callback' => 'create_response_php_function',
     'page arguments' => array(1, 2, 3),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  
+
   $items['update_student_gpa_act/%'] = array(
-    'title' => 'modify student GPA and ACT score', 
-    'description' => 'Callback for updating GPA and ACT.', 
-    'page callback' => 'update_student_gpa_act_php_function', 
+    'title' => 'modify student GPA and ACT score',
+    'description' => 'Callback for updating GPA and ACT.',
+    'page callback' => 'update_student_gpa_act_php_function',
     'page arguments' => array(1, 2, 3),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  
+
   $items['delete_student_user/%'] = array(
-    'title' => 'delete a user after verifying they are a student', 
-    'description' => 'Callback for verifying student and deleting them.', 
-    'page callback' => 'delete_student_user_php_function', 
+    'title' => 'delete a user after verifying they are a student',
+    'description' => 'Callback for verifying student and deleting them.',
+    'page callback' => 'delete_student_user_php_function',
     'page arguments' => array(1),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  
+
   $items['reset_game/%'] = array(
-    'title' => 'set a game and its users back to the start', 
-    'description' => 'reset a game.', 
-    'page callback' => 'reset_game_php_function', 
+    'title' => 'set a game and its users back to the start',
+    'description' => 'reset a game.',
+    'page callback' => 'reset_game_php_function',
     'page arguments' => array(1),
-    'access arguments' => array('access content'), 
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
 
@@ -191,10 +197,10 @@ function add_game_to_facilitator($node) {
 }
 
 function add_users_to_game($node) {
-  
+
   $gnid = $node->nid;
   $gameNum = $node->field_serial_number['und'][0]['value'];
-  
+
   $numPlayers = $node->field_number_of_players['und'][0]['value'];
   $currColor = 16;
 
@@ -231,7 +237,7 @@ function add_users_to_game($node) {
     );
     user_save(null, $edit);
     $currColor++;
-  
+
   }
 }
 
@@ -248,7 +254,7 @@ function check_all_students_and_add_button($check_for) {
   $result2 = db_query('SELECT f.entity_id FROM field_data_field_playing_game f WHERE f.field_playing_game_target_id = :gnid', array(':gnid' => $gnid));
 
   $done = true;
-  
+
   drupal_set_message("about to enter second loop");
 
   foreach ($result2 as $record2) {
@@ -264,9 +270,9 @@ function check_all_students_and_add_button($check_for) {
   if ($done) {
     drupal_set_message("hitting done if");
     drupal_add_js(array('gamenid' => array('key' => $gnid)), 'setting');
-    drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js'); 
+    drupal_add_js(drupal_get_path('module', 'earn_it_form_tweaks') . '/js/continue-facil.js');
   }
-  
+
 }
 
 function update_student_progress_php_function($arg1, $arg2) {
@@ -283,7 +289,7 @@ function update_student_progress_php_function($arg1, $arg2) {
   //if (isset(user_save($cuser, $edit)->uid))
     //check_all_students_and_add_button($arg2);
 }
-  
+
 function update_facil_progress_php_function($arg1, $arg2) {
   $cnode = node_load($arg1); // arg1 is nid
   $cnode -> field_current_game_state['und'][0]['tid'] = $arg2; // tid
@@ -302,7 +308,7 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
     'promote' => 0,
   );
   $cscholarship= 0;
-  
+
   $cnode = node_load($arg1);
   if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
     $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
@@ -320,11 +326,11 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   $ewrapper->field_selected_hours->set(intval($arg3));
   $ewrapper->field_selected_money->set(intval($cscholarship));
   $ewrapper->save();
-  
+
   // add scholarship money to the user
   $cscholarship2 = $cuser->field_scholarship_money['und'][0]['value'] + $cscholarship;
 
-  
+
   // FIXME: also save ACT and GPA
   $edit = array(
     'field_scholarship_money' => array(
@@ -359,8 +365,8 @@ function delete_student_user_php_function ($arg1) { // uid
   // delete the student
 
   $cuser = user_load($arg1);
-  
-  
+
+
   if (!in_array('Facilitator', $cuser->roles)) { // not a facilitator
     $cnid = $cuser->field_playing_game['und'][0]['target_id'];
     $cnode = node_load($cnid);
@@ -405,7 +411,7 @@ function reset_game_php_function ($arg1) { // nid of the game to reset
     );
     user_save($cuser, $edit);
   }
-  
+
   $cnode = node_load($arg1);
   $cnode -> field_current_game_state['und'][0]['tid'] = 1;
   node_save($cnode);

@@ -26,10 +26,6 @@
  */
 function earn_it_activity_tweaks_form_alter(&$form, &$form_state, $form_id) {
 
-  global $user;
-  if ($user->uid == 235) {
-    dpm($form, 'earn it activity tweaks form alter');
-  }
   switch($form_id) {
 
     case 'activity_node_form':
