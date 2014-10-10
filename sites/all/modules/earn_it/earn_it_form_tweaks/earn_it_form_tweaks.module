@@ -96,6 +96,7 @@ function earn_it_form_tweaks_init() {
   // END INIT-35
   if ($cpath == "node/59") { // student page
     global $user;
+    dpm($user, 'user - init');
     if ($user->uid == 0) {
       drupal_set_message('You are not properly logged in. It may be because you selected a color that was not available for a particular game. Please try again.', 'error');
       drupal_goto("user/login");
