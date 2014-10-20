@@ -78,10 +78,7 @@ function earn_it_form_tweaks_node_insert($node) {
 }
 
 function earn_it_form_tweaks_init() {
-  // Debug for INIT-20/6
-  if (module_exists('devel')) {
-    dpm(debug_backtrace(), 'debug backtrace');
-  }
+
   $cpath = current_path();
   // INIT-35 - refresh facilitator page every 5 mins to keep session intact
   if ($cpath == "node/58") {
@@ -314,6 +311,11 @@ function update_facil_progress_php_function($arg1, $arg2) {
 }
 
 function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours, money
+
+  // Debug for INIT-20/6
+  if (module_exists('devel')) {
+    dpm(debug_backtrace(), 'debug backtrace');
+  }
 
   // create and save the response node
   $cuser = user_load($arg2);
