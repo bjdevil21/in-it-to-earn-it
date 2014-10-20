@@ -312,11 +312,6 @@ function update_facil_progress_php_function($arg1, $arg2) {
 
 function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours, money
 
-  // Debug for INIT-20/6
-  if (module_exists('devel')) {
-    dpm(debug_backtrace(), 'debug backtrace');
-  }
-
   // create and save the response node
   $cuser = user_load($arg2);
   $values = array(
@@ -361,6 +356,12 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
 }
 
 function update_student_gpa_act_php_function ($arg1, $arg2, $arg3) {
+
+  // Debug for INIT-20/6
+  if (module_exists('devel')) {
+    dpm(ddebug_backtrace(), 'ddebug backtrace');
+  }
+
 // uid, gpa, act
   $cuser = user_load($arg1);
 
