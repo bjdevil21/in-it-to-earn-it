@@ -78,9 +78,12 @@ function earn_it_form_tweaks_node_insert($node) {
 }
 
 function earn_it_form_tweaks_init() {
-  //drupal_add_js('jQuery(document).ready(function () { alert("Init"); });', 'inline');
+  // Debug for INIT-20/6
+  if (module_exists('devel')) {
+    dpm(debug_backtrace(), 'debug backtrace');
+  }
   $cpath = current_path();
-  // INIT-35 possible fix
+  // INIT-35 - refresh facilitator page every 5 mins to keep session intact
   if ($cpath == "node/58") {
     drupal_add_html_head(
       array(
