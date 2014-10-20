@@ -76,9 +76,7 @@
  *
  * @ingroup themeable
  */
-if (module_exists('devel')) {
-  dpm(debug_backtrace(), 'debug backtrace');
-}
+
 ?>
 <div id="page-wrapper">
   <div id="page">
