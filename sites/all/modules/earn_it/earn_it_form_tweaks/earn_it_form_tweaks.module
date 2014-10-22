@@ -324,11 +324,18 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   $cscholarship= 0;
 
   $cnode = node_load($arg1);
+
   if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
     $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
+    $cs_text = "if - 0";
   }
   else {
     $cscholarship += ($cnode->field_scholarship_per_hour['und'][0]['value'] * $arg3);
+    $cs_text = "else - arg3 - " . $arg3;
+  }
+
+  if (module_exists('devel')) {
+    dpm($cscholarship, $cs_text);
   }
 
   $entity = entity_create('node', $values);
