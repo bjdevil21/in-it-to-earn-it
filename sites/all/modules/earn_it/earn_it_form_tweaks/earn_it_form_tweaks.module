@@ -143,7 +143,7 @@ function earn_it_form_tweaks_menu() {
   $items['user_progress/%'] = array(
     'title' => 'Update student progress',
     'description' => 'Callback for updating student progress.',
-    'page callback' => 'update_student_progress_php_function',
+    'page callback' => '_earn_it_form_tweaks_update_student_progress',
     'page arguments' => array(1, 2),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -152,7 +152,7 @@ function earn_it_form_tweaks_menu() {
   $items['facil_progress/%'] = array(
     'title' => 'Update facilitator progress',
     'description' => 'Callback for updating facilitator progress.',
-    'page callback' => 'update_facil_progress_php_function',
+    'page callback' => '_earn_it_form_tweaks_update_facil_progress',
     'page arguments' => array(1, 2),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -161,7 +161,7 @@ function earn_it_form_tweaks_menu() {
   $items['create_response/%'] = array(
     'title' => 'Create a response to an activity',
     'description' => 'Callback for creating a response node.',
-    'page callback' => 'create_response_php_function',
+    'page callback' => '_earn_it_form_tweaks_create_response',
     'page arguments' => array(1, 2, 3),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -170,7 +170,7 @@ function earn_it_form_tweaks_menu() {
   $items['update_student_gpa_act/%'] = array(
     'title' => 'modify student GPA and ACT score',
     'description' => 'Callback for updating GPA and ACT.',
-    'page callback' => 'update_student_gpa_act_php_function',
+    'page callback' => '_earn_it_form_tweaks_update_student_gpa_act',
     'page arguments' => array(1, 2, 3),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -179,7 +179,7 @@ function earn_it_form_tweaks_menu() {
   $items['delete_student_user/%'] = array(
     'title' => 'delete a user after verifying they are a student',
     'description' => 'Callback for verifying student and deleting them.',
-    'page callback' => 'delete_student_user_php_function',
+    'page callback' => '_earn_it_form_tweaks_delete_student',
     'page arguments' => array(1),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -188,7 +188,7 @@ function earn_it_form_tweaks_menu() {
   $items['reset_game/%'] = array(
     'title' => 'set a game and its users back to the start',
     'description' => 'reset a game.',
-    'page callback' => 'reset_game_php_function',
+    'page callback' => '_earn_it_form_tweaks_reset_game',
     'page arguments' => array(1),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -255,7 +255,7 @@ function add_users_to_game($node) {
   }
 }
 
-function check_all_students_and_add_button($check_for) {
+function _earn_it_form_tweaks_check_all_stu_add_btn($check_for) {
   global $user;
   $user = user_load($user->uid);
 
@@ -289,7 +289,10 @@ function check_all_students_and_add_button($check_for) {
 
 }
 
-function update_student_progress_php_function($arg1, $arg2) {
+function _earn_it_form_tweaks_update_student_progress($arg1, $arg2) {
+  // Sanitize URL args
+  $arg1 = check_url($arg1);
+  $arg2 = check_url($arg2);
   $cuser = user_load($arg1); // arg1 is uid
   $edit = array(
     'field_student_state' => array(
@@ -301,17 +304,38 @@ function update_student_progress_php_function($arg1, $arg2) {
   $fakevar = 35;
   return $fakevar;
   //if (isset(user_save($cuser, $edit)->uid))
-    //check_all_students_and_add_button($arg2);
+    //_earn_it_form_tweaks_check_all_stu_add_btn($arg2);
 }
 
-function update_facil_progress_php_function($arg1, $arg2) {
+function _earn_it_form_tweaks_update_facil_progress($arg1, $arg2) {
+  // Sanitize URL args
+  $arg1 = check_url($arg1);
+  $arg2 = check_url($arg2);
   $cnode = node_load($arg1); // arg1 is nid
   $cnode -> field_current_game_state['und'][0]['tid'] = $arg2; // tid
   node_save($cnode);
 }
 
-function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, hours, money
-
+/**
+ * Create a single response node for ALL selected activities for a single week, for
+ * a single user. This is called multiple times for each weekly submission, once for
+ * each activity.
+ *
+ * The scholarship money is tracked by getting the user's existing
+ * field_scholarship_money value, updating it based on $cscholarship2, and calling
+ * user_save().
+ *
+ * Currently called by Javascript code in button blocks.
+ *
+ * @param unknown_type $arg1 - The activity id (node id)
+ * @param unknown_type $arg2 - The uid of the team
+ * @param unknown_type $arg3 - The hours spent on the activity
+ */
+function _earn_it_form_tweaks_create_response($arg1, $arg2, $arg3) { // activity, user, hours, money
+  // Sanitize URL args
+  $arg1 = check_url($arg1);
+  $arg2 = check_url($arg2);
+  $arg3 = check_url($arg3);
   // create and save the response node
   $cuser = user_load($arg2);
   $values = array(
@@ -321,21 +345,17 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
     'comment' => 0,
     'promote' => 0,
   );
-  $cscholarship= 0;
+  $cscholarship = 0;
 
+  // load activity node
   $cnode = node_load($arg1);
 
+  // the current activity's scholarship bonus (or loss)
   if ($cnode->field_variable_time['und'][0]['value'] == 0) { // fixed time
     $cscholarship +=  $cnode->field_scholarship['und'][0]['value'];
-    $cs_text = "if - 0";
   }
   else {
     $cscholarship += ($cnode->field_scholarship_per_hour['und'][0]['value'] * $arg3);
-    $cs_text = "else - arg3 - " . $arg3;
-  }
-
-  if (module_exists('devel')) {
-    dpm($cscholarship, $cs_text);
   }
 
   $entity = entity_create('node', $values);
@@ -351,46 +371,56 @@ function create_response_php_function($arg1, $arg2, $arg3) { // activity, user, 
   // add scholarship money to the user
   $cscholarship2 = $cuser->field_scholarship_money['und'][0]['value'] + $cscholarship;
 
-
-  // FIXME: also save ACT and GPA
+  // FIXME: also save ACT and GPA here, or
+  // in _earn_it_form_tweaks_update_student_gpa_act
+  // Currently done in Javascript in block ids 6, 10, and 13 (one for each week)
   $edit = array(
     'field_scholarship_money' => array(
-        'und' => array(
-          0 => array(
-            "value" => $cscholarship2))),
+      'und' => array(
+        0 => array(
+          "value" => $cscholarship2,
+        )
+      )
+    ),
   );
   user_save($cuser, $edit);
 }
 
-function update_student_gpa_act_php_function ($arg1, $arg2, $arg3) {
-
-  // Debug for INIT-20/6
-  if (module_exists('devel')) {
-    dpm(ddebug_backtrace(), 'ddebug backtrace');
-  }
+function _earn_it_form_tweaks_update_student_gpa_act ($arg1, $arg2, $arg3) {
+  // Sanitize URL args
+  $arg1 = check_url($arg1);
+  $arg2 = check_url($arg2);
+  $arg3 = check_url($arg3);
 
 // uid, gpa, act
   $cuser = user_load($arg1);
 
   $edit = array(
     'field_gpa' => array(
-        'und' => array(
-          0 => array(
-            "value" => $arg2))),
+      'und' => array(
+        0 => array(
+          "value" => $arg2,
+        )
+      )
+    ),
     'field_act_score' => array(
-        'und' => array(
-          0 => array(
-            "value" => $arg3))),
-
+      'und' => array(
+        0 => array(
+          "value" => $arg3,
+        )
+      )
+    ),
   );
   user_save($cuser, $edit);
 }
 
-function delete_student_user_php_function ($arg1) { // uid
+function _earn_it_form_tweaks_delete_student ($arg1) { // uid
+  // Sanitize URL args
+  $arg1 = check_url($arg1);
+
   // verify the uid belongs to a student
   // edit the game to no longer have that many students
   // delete the student
-
   $cuser = user_load($arg1);
 
 
@@ -412,8 +442,8 @@ function delete_student_user_php_function ($arg1) { // uid
   }
 }
 
-function reset_game_php_function ($arg1) { // nid of the game to reset
-
+function _earn_it_form_tweaks_reset_game ($arg1) { // nid of the game to reset
+  // $arg1 sanitized by db_query below
   $result = db_query('SELECT f.entity_id FROM field_data_field_playing_game f WHERE f.field_playing_game_target_id = :nid', array(':nid' => $arg1));
 
   foreach ($result as $record) {
